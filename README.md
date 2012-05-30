@@ -8,7 +8,7 @@ TODO
 
 1) Specific Options
 
-	-c / --check X     : Is X prime?
+	-c / --check X     : Is X prime? (default)
 
 	-s / --sieve A X   : Generate all primes between A and X.
 	
