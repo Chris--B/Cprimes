@@ -10,9 +10,9 @@ TODO
 
 	-c / --check X     : Is X prime?
 
-	-s / --sieve A X   : Generate all primes between A and X. If no A is given, default 0.
+	-s / --sieve A X   : Generate all primes between A and X.
 	
-	-s / --sieve X      
+	-s / --sieve X     : If no A is given, default to 0.
 	
 	-n / --no-print    : Don't print the primes, just count them.
 	
