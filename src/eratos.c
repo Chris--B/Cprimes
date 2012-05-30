@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <stdbool.h>
 #include <math.h>
 
@@ -11,16 +10,16 @@
 	ODD_ARRAY_INDEX_OF() and ODD_ARRAY_VALUE_AT() make dealing
 	with it easier.
 */
-static inline size_t odd_array_index_of(prime_t value)
+static inline size_t odd_array_index_of(uint64_t value)
 {
 	return (value - 1) / 2;
 }
-static inline prime_t odd_array_value_at(size_t index)
+static inline uint64_t odd_array_value_at(size_t index)
 {
 	return (2 * index) + 1;
 }
 
-size_t eratos_sieve(int n, prime_t** primes_array)
+size_t eratos_sieve(int n, uint64_t** primes_array)
 {
 	/* If we're not given an array to store output, don't. */
 	bool not_null_array = !!primes_array;
@@ -34,7 +33,7 @@ size_t eratos_sieve(int n, prime_t** primes_array)
 	}
 
 	/* Make our lives a little easier. */
-	prime_t *p = not_null_array ? *primes_array : NULL; /* Why do I not need this for O2 / O3? */
+	uint64_t *p = not_null_array ? *primes_array : NULL; /* Why do I not need this for O2 / O3? */
 
 	size_t primes_count  = 0;
 	size_t sieve_len     = odd_array_index_of(n) + 1;
@@ -52,16 +51,16 @@ size_t eratos_sieve(int n, prime_t** primes_array)
 	uint8_t* sieve = calloc(sieve_len, sizeof (uint8_t));
 	if (!sieve)
 	{
-		printf("Error allocating sieve of %zu bytes.\n", sieve_len * sizeof(uint8_t));
+		fprintf(stderr, "Error allocating sieve of %zu bytes.\n", sieve_len * sizeof(uint8_t));
 		return 0;
 	}
 
 	if(not_null_array)
 	{
-		if (!(p = malloc(prime_estimate * sizeof(prime_t))))
+		if (!(p = malloc(prime_estimate * sizeof(uint64_t))))
 		{
-			printf("Error allocating primes_array array of %zu bytes.\n",
-				prime_estimate * sizeof(prime_t));
+			fprintf(stderr, "Error allocating primes_array array of %zu bytes.\n",
+				prime_estimate * sizeof(uint64_t));
 			free(sieve);
 			return 0;
 		}

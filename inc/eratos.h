@@ -2,13 +2,12 @@
 #define _PRIMES_H_
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include <inttypes.h>
-
-//typedef __int128_t prime_t;
-typedef uint64_t prime_t;
+#include <stdlib.h>
 
 /*
 	Return number of primes found,
@@ -20,7 +19,7 @@ typedef uint64_t prime_t;
 	TODO: Segmented Sieve of Eratosthenes 
 		http://programmingpraxis.com/2010/02/05/segmented-sieve-of-eratosthenes/
 */
-size_t eratos_sieve(int n, prime_t** primes_array);
+size_t eratos_sieve(int n, uint64_t** primes_array);
 
 #ifdef __cplusplus
 }
