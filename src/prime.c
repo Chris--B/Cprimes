@@ -9,21 +9,29 @@
 
 void usage()
 {
-	printf("Usage: ./primes number\n");
+	printf("Find prime numbers in a range (--sieve) or check if a number is prime (--check).\n\n");
+	printf("Options:\n");
+	printf("   -c / --check X  \n");
+	printf("   -s / --sieve X  \n");
+	printf("   -s / --sieve X Y\n");
+	printf("   -o / --out FILE \n");
+	printf("   -n / --no-print \n");
+	printf("   -h / --help     \n");
 	exit(1);
 }
 
 int main(int argc, char** argv)
 {
 	int c;
-	int n_flag = 0;
-	int num = 0;
+	int no_print_flag = 0; //no printin
+	int sieve_max = 0;
 	uint64_t num_to_check = 0;
 	FILE* outfile = stdout;
 
 	uint64_t* primes = NULL;
 	size_t len = 0;
 
+	if(argc == 1) usage();
 
 	while((c = getopt(argc, argv, "c:s:o:nh")) != -1)
 	{
@@ -32,13 +40,15 @@ int main(int argc, char** argv)
 			//check if prime
 			case 'c':
 				sscanf(optarg, "%" SCNu64, &num_to_check);
-				//Now do something with x....
+				//Now do something with num_to_check....
 				fprintf(stderr, "Not implemented.\n");
 				exit(3);
 				break;
+			//or setup a sieve
 			case 's':
-				num = atoi(optarg);
+				sieve_max= atoi(optarg);
 				break;
+			//change output
 			case 'o':
 				errno = 0;
 				outfile = fopen(optarg, "w");
@@ -49,7 +59,7 @@ int main(int argc, char** argv)
 				}
 				break;
 			case 'n':
-				n_flag = 1;
+				no_print_flag = 1;
 				break;
 			case 'h':
 				usage();
@@ -60,16 +70,16 @@ int main(int argc, char** argv)
 		}
 	}
 	
-	if(n_flag)
+	if(no_print_flag)
 	{
-		len = eratos_sieve(num, NULL);	
+		len = eratos_sieve(sieve_max, NULL);	
 	}
 	else
 	{
-		len = eratos_sieve(num, &primes);
+		len = eratos_sieve(sieve_max, &primes);
 	}
 
-	printf("Total: %zu\n", len);
+	fprintf(outfile, "Total: %zu\n", len);
 	
 	for(size_t i = 0; i < len; i++)
 	{
