@@ -13,11 +13,11 @@ void usage()
 	printf(
 "Options:\n\
    [-c | --check X]        Checks whether or not X is prime.\n\
-   [-s | --sieve X]        Sieves from 0 to X and prints all primes in range.\n\
-                           Same as -s 0 X\n\
    [-s | --sieve Y X]      Sieves from Y to X and prints all primes in range.\n\
+   [-s | --sieve X]        Sieves from 0 to X and prints all primes in range.\n\
+                             Same as -s 0 X\n\
    [-o | --out FILE]       Change output from stdout to FILE\n\
-   [-n | --no-print]       When specified, no primes will be printed. Only counted.\n\
+   [-n | --no-print]       No primes will be printed. Only counted.\n\
                               Use with -s.\n\
    [-h | --help]           Displays this information.\n");
 	exit(1);
