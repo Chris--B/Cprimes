@@ -121,13 +121,9 @@ int main(int argc, char** argv)
 	switch(mode)
 	{
 		case MODE_SIEVE:
-			if(no_print_flag)
+			fprintf(outfile, "Total: %zu\n", (primes_len = eratos_sieve(sieve_max, &primes)));	
+			if(!no_print_flag)
 			{
-				fprintf(outfile, "Total: %zu\n", eratos_sieve(sieve_max, NULL));	
-			}
-			else
-			{
-				fprintf(outfile, "Total: %zu\n", (primes_len = eratos_sieve(sieve_max, &primes)));	
 				for(size_t i = 0; i < primes_len; i++)
 				{
 					fprintf(outfile, "%" PRIu64 " ", primes[i]);
