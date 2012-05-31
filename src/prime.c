@@ -51,7 +51,7 @@ void check_mode(int mode)
 int main(int argc, char** argv)
 {
 	int c;
-	int no_print_flag = 0;
+	int print_flag = 1;
 
 	int sieve_max = 0;         //Used with MODE_RANGE and MODE_SIEVE
 	int sieve_min = 0;         //Used with MODE_RANGE
@@ -62,7 +62,7 @@ int main(int argc, char** argv)
 	int mode = NO_MODE;
 
 	uint64_t* primes = NULL;
-	size_t primes_len = 0;
+	size_t primes_count = 0;
 
 	if(argc == 1) usage(1);
 
@@ -107,7 +107,7 @@ int main(int argc, char** argv)
 				break;
 
 			case 'n':
-				no_print_flag = 1;
+				print_flag = 0;
 				break;
 
 			case 'h': case '?':
@@ -121,10 +121,10 @@ int main(int argc, char** argv)
 	switch(mode)
 	{
 		case MODE_SIEVE:
-			fprintf(outfile, "Total: %zu\n", (primes_len = eratos_sieve(sieve_max, &primes)));	
-			if(!no_print_flag)
+			fprintf(outfile, "Total: %zu\n", (primes_count = eratos_sieve(sieve_max, &primes)));	
+			if(print_flag)
 			{
-				for(size_t i = 0; i < primes_len; i++)
+				for(size_t i = 0; i < primes_count; i++)
 				{
 					fprintf(outfile, "%" PRIu64 " ", primes[i]);
 				}
