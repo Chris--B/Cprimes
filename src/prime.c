@@ -15,10 +15,9 @@
 static const struct option long_options[] =
 {
 	{"count",    required_argument, NULL, 'c'},
-	{"in-range",    required_argument, NULL, 'r'},
+	{"in-range", required_argument, NULL, 'r'},
 	{"below",    required_argument, NULL, 'b'},
 	{"out",      required_argument, NULL, 'o'},
-	{"no-print", no_argument,       NULL, 'n'},
 	{"help",     no_argument,       NULL, 'h'},
 	{NULL,       no_argument,       NULL, 0}
 };
@@ -29,7 +28,7 @@ void usage(int exit_code)
 	printf(
 "Options:\n\
    [-c | --count X]        Counts primes less than or equal to X.\n\
-   [-r | --in-range Y X]      Sieves from Y to X and prints all primes in range.\n\
+   [-r | --in-range Y X]   Sieves from Y to X and prints all primes in range.\n\
    [-b | --below X]        Sieves from 0 to X and prints all primes in range.\n\
                              Same as -r 0 X\n\
    [-o | --out FILE]       Change output from stdout to FILE\n\
@@ -62,7 +61,7 @@ int main(int argc, char** argv)
 
 	if(argc == 1) usage(1);
 
-	while((c = getopt_long(argc, argv, "c:r:b:o:nh", long_options, (int*)0 )) != -1)
+	while((c = getopt_long(argc, argv, "c:r:b:o:h", long_options, (int*)0 )) != -1)
 	{
 		switch (c)
 		{
