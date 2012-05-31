@@ -7,6 +7,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define NO_MODE    0
+#define MODE_SIEVE 1
+#define MODE_RANGE 2
+#define MODE_CHECK 3
+
 static const struct option long_options[] =
 {
 	{"check",    required_argument, NULL, 'c'},
@@ -18,7 +23,7 @@ static const struct option long_options[] =
 	{NULL,       no_argument,       NULL, 0}
 };
 
-void usage()
+void usage(int exit_code)
 {
 	printf("Find prime numbers.\n");
 	printf(
@@ -31,21 +36,35 @@ void usage()
    [-n | --no-print]       No primes will be printed. Only counted.\n\
                               Use with -s.\n\
    [-h | --help]           Displays this information.\n");
-	exit(1);
+	exit(exit_code);
+}
+
+void check_mode(int mode)
+{
+	if(mode)
+	{
+		fprintf(stderr, "You can only use one -c, -r, or -s.\n");
+		exit(1);
+	}
 }
 
 int main(int argc, char** argv)
 {
 	int c;
 	int no_print_flag = 0;
-	int sieve_max = 0;
-	uint64_t num_to_check = 0;
+
+	int sieve_max = 0;         //Used with MODE_RANGE and MODE_SIEVE
+	int sieve_min = 0;         //Used with MODE_RANGE
+	uint64_t num_to_check = 0; //Used with MODE_CHECK
+	
 	FILE* outfile = stdout;
 
-	uint64_t* primes = NULL;
-	size_t len = 0;
+	int mode = NO_MODE;
 
-	if(argc == 1) usage();
+	uint64_t* primes = NULL;
+	size_t primes_len = 0;
+
+	if(argc == 1) usage(1);
 
 	while((c = getopt_long(argc, argv, "c:s:r:o:nh", long_options, (int*)0 )) != -1)
 	{
@@ -53,19 +72,32 @@ int main(int argc, char** argv)
 		{
 			//check if prime
 			case 'c':
+				check_mode(mode);
+				mode = MODE_CHECK;
 				sscanf(optarg, "%" SCNu64, &num_to_check);
-				//Now do something with num_to_check....
-			case 'r':
-				fprintf(stderr, "Not implemented.\n");
-				exit(3);
 				break;
+
+			case 'r':
+				check_mode(mode);
+				mode = MODE_RANGE;
+				fprintf(stderr, "Not implemented.\n");
+				break;
+
 			//or setup a sieve
 			case 's':
+				check_mode(mode);
 				sieve_max= atoi(optarg);
+				mode = MODE_SIEVE;
 				break;
+
 			//change output
 			case 'o':
 				errno = 0;
+				if(outfile != stdout)
+				{
+					fprintf(stderr, "Redefining --out. Stop that.\n");
+					exit(5);	
+				}
 				outfile = fopen(optarg, "w");
 				if(!outfile)
 				{
@@ -73,29 +105,51 @@ int main(int argc, char** argv)
 					exit(1);
 				}
 				break;
+
 			case 'n':
 				no_print_flag = 1;
 				break;
+
 			case 'h': case '?':
-				usage();
+				usage(2);
 				break;
 		}
 	}
 
-	if(no_print_flag)
-	{
-		len = eratos_sieve(sieve_max, NULL);	
-	}
-	else
-	{
-		len = eratos_sieve(sieve_max, &primes);
-	}
+	//while(opti)
 
-	fprintf(outfile, "Total: %zu\n", len);
-	
-	for(size_t i = 0; i < len; i++)
+	switch(mode)
 	{
-		fprintf(outfile, "%" PRIu64 "\n", primes[i]);
+		case MODE_SIEVE:
+			if(no_print_flag)
+			{
+				fprintf(outfile, "Total: %zu\n", eratos_sieve(sieve_max, NULL));	
+			}
+			else
+			{
+				fprintf(outfile, "Total: %zu\n", (primes_len = eratos_sieve(sieve_max, &primes)));	
+				for(size_t i = 0; i < primes_len; i++)
+				{
+					fprintf(outfile, "%" PRIu64 " ", primes[i]);
+				}
+				printf("\n");
+				free(primes);
+			}
+			break;
+
+		case MODE_RANGE:
+			fprintf(stderr, "--range not yet implemented.\n");
+			break;
+		case MODE_CHECK:
+			fprintf(stderr, "--check not yet implemented.\n");
+			break;
+		case NO_MODE:
+			fprintf(stderr, "No mode selected.\n");
+			usage(1);
+			break;
+		default:
+			fprintf(stderr, "Unknown mode.\n");
+			break;
 	}
 
 	fclose(outfile);
