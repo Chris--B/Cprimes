@@ -69,7 +69,7 @@ int main(int argc, char** argv)
 			case 'c':
 				check_mode(mode);
 				mode = MODE_COUNT;
-				sscanf(optarg, "%" SCNu64, &sieve_max);
+				sscanf(optarg, "%d", &sieve_max);
 				break;
 
 			case 'r':
