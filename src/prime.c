@@ -50,7 +50,7 @@ int main(int argc, char** argv)
 	int c;
 
 	int sieve_max = 0;         //Used with MODE_RANGE and MODE_BELOW
-	int sieve_min = 0;         //Used with MODE_RANGE
+	//int sieve_min = 0;         //Used with MODE_RANGE
 	
 	FILE* outfile = stdout;
 
