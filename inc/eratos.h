@@ -7,7 +7,7 @@ extern "C"
 #endif
 
 #include <inttypes.h>
-#include <stdlib.h>
+#include <stddef.h>
 
 /*
 	Return number of primes found,
