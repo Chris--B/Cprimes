@@ -112,7 +112,7 @@ int main(int argc, char** argv)
 	switch(mode)
 	{
 		case MODE_BELOW:
-			primes_count = eratos_sieve(sieve_max, &primes);
+			primes_count = eratos(sieve_max, &primes);
 			for(size_t i = 0; i < primes_count; i++)
 			{
 				fprintf(outfile, "%" PRIu64 " ", primes[i]);
@@ -125,7 +125,7 @@ int main(int argc, char** argv)
 			fprintf(stderr, "--range not yet implemented.\n");
 			break;
 		case MODE_COUNT:
-			fprintf(outfile, "%zu\n", eratos_sieve(sieve_max, NULL));	
+			fprintf(outfile, "%zu\n", eratos(sieve_max, NULL));	
 			break;
 		case NO_MODE:
 			fprintf(stderr, "No mode selected.\n");
