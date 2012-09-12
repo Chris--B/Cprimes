@@ -19,9 +19,9 @@ static inline uint64_t odd_array_value_at(size_t index)
 	return (2 * index) + 1;
 }
 
-size_t eratos_sieve(int n, uint64_t** primes_array)
+size_t eratos(int n, uint64_t** primes_array)
 {
-	/* If we're not given an array to store output, don't. */
+	// If we're not given an array to store output, don't.
 	bool not_null_array = !!primes_array;
 
 	/*	N is the largest number in the sieve. 
@@ -32,13 +32,13 @@ size_t eratos_sieve(int n, uint64_t** primes_array)
 		n--;
 	}
 
-	/* Make our lives a little easier. */
-	uint64_t *p = not_null_array ? *primes_array : NULL; /* Why do I not need this for O2 / O3? */
+	// Make our lives a little easier.
+	uint64_t *p = not_null_array ? *primes_array : NULL; // Why do I not need this for O2 / O3?
 
 	size_t primes_count  = 0;
 	size_t sieve_len     = odd_array_index_of(n) + 1;
 
-	/* Index of SQRT(n) - This is when the sieving knows it can stop */
+	// Index of SQRT(n) - This is when the sieving knows it can stop
 	size_t root_index    = odd_array_index_of((size_t)sqrt((double)(n)));
 
 	/* http://primes.utm.edu/howmany.shtml
@@ -89,7 +89,7 @@ size_t eratos_sieve(int n, uint64_t** primes_array)
 	}
 	if(not_null_array)
 	{
-		p[0] = 2;	/* 2 is prime, but 1 is not. It's a 'unit' */
+		p[0] = 2;	// 2 is prime, but 1 is not. It's a 'unit'
 		*primes_array = p;
 	}
 
