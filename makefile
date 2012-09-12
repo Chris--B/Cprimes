@@ -4,7 +4,7 @@ LFLAGS   =-lm
 
 VPATH=src:inc
 
-all: prime test sum_primes
+all: prime test
 
 debug:
 	@make -B prime CC=clang CFLAGS+="-g"
