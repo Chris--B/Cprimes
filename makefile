@@ -1,9 +1,10 @@
-CFLAGS   =-Wall -Wextra -std=c99 -Iinc -Wno-unused-parameter
+CPPFLAGS =-Wall -Wextra -Iinc
+CFLAGS   =-std=c99
 LFLAGS   =-lm
 
 VPATH=src:inc
 
-all: prime test
+all: prime test sum_primes
 
 debug:
 	@make -B prime CC=clang CFLAGS+="-g"
@@ -11,13 +12,9 @@ debug:
 release:
 	@make -B prime CC=gcc CFLAGS+="-Ofast -DNDEBUG"
 
-prime: prime.o eratos.o atkin.o $(LFLAGS)
-test: test.o eratos.o atkin.o $(LFLAGS)
-
-eratos.o: eratos.c eratos.h
-uint128.o: uint128.c uint128.h
-atkin.o: atkin.c atkin.h
+prime: prime.o eratos.o atkin.o
+test: test.o eratos.o atkin.o
 
 .PHONY: clear
 clean:
-	@rm -fv prime *.o
+	@rm -fv prime *.o *.exe
