@@ -56,7 +56,7 @@ int main(int argc, char** argv)
 	enum MODE mode = NONE;
 
 	uint64_t* primes = NULL;
-	unsigned long primes_count = 0;
+	size_t primes_count = 0;
 
 	if(argc == 1) usage(1);
 
