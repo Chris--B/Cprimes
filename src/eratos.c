@@ -32,8 +32,9 @@ size_t eratos(int n, uint64_t** primes_array)
 		n--;
 	}
 
-	// Make our lives a little easier.
-	uint64_t *p = not_null_array ? *primes_array : NULL; // Why do I not need this for O2 / O3?
+	size_t i, k;
+
+	uint64_t *p = not_null_array ? *primes_array : NULL;
 
 	size_t primes_count  = 0;
 	size_t sieve_len     = odd_array_index_of(n) + 1;
@@ -51,7 +52,7 @@ size_t eratos(int n, uint64_t** primes_array)
 	uint8_t* sieve = calloc(sieve_len, sizeof (uint8_t));
 	if (!sieve)
 	{
-		fprintf(stderr, "Error allocating sieve of %zu bytes.\n", sieve_len * sizeof(uint8_t));
+		fprintf(stderr, "Error allocating sieve of %lu bytes.\n", (unsigned long)(sieve_len * sizeof(uint8_t)));
 		return 0;
 	}
 
@@ -59,24 +60,24 @@ size_t eratos(int n, uint64_t** primes_array)
 	{
 		if (!(p = malloc(prime_estimate * sizeof(uint64_t))))
 		{
-			fprintf(stderr, "Error allocating primes_array array of %zu bytes.\n",
-				prime_estimate * sizeof(uint64_t));
+			fprintf(stderr, "Error allocating primes_array array of %lu bytes.\n",
+				(unsigned long)(prime_estimate * sizeof(uint64_t)));
 			free(sieve);
 			return 0;
 		}
 	}
-	for(size_t i = 1; i <= root_index; i++)
+	for(i = 1; i <= root_index; i++)
 	{
 		if (!sieve[i])
 		{
-			for(size_t k = i + odd_array_value_at(i); k < sieve_len; k += odd_array_value_at(i))
+			for(k = i + odd_array_value_at(i); k < sieve_len; k += odd_array_value_at(i))
 			{
 				sieve[k] = 1;	//"crossed off"
 			}
 		}
 	}
 	
-	for(size_t i = 0; i < sieve_len; i++)
+	for(i = 0; i < sieve_len; i++)
 	{
 		if (!sieve[i])
 		{

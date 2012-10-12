@@ -23,4 +23,5 @@ size_t eratos_seg(int n, uint64_t **out);
 }
 #endif
 
-#endif //ERATOS_SEG
+//ERATOS_SEG
+#endif 

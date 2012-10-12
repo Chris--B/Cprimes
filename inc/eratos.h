@@ -1,5 +1,5 @@
-#ifndef _PRIMES_H_
-#define _PRIMES_H_
+#ifndef PRIMES_H
+#define PRIMES_H
 
 #ifdef __cplusplus
 extern "C"
@@ -25,4 +25,5 @@ size_t eratos(int n, uint64_t** primes_array);
 }
 #endif
 
-#endif // _PRIMES_H_
+//PRIMES_H
+#endif 

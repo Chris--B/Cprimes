@@ -7,10 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define NO_MODE    0
-#define MODE_BELOW 1
-#define MODE_RANGE 2
-#define MODE_COUNT 3
+enum MODE {NONE, BELOW, RANGE, COUNT};
 
 static const struct option long_options[] =
 {
@@ -32,13 +29,14 @@ void usage(int exit_code)
    [-b | --below X]        Sieves from 0 to X and prints all primes in range.\n\
                              Same as -r 0 X\n\
    [-o | --out FILE]       Change output from stdout to FILE\n\
-   [-h | --help]           Displays this information.\n");
+   [-h | --help]           Displays this information.\n"
+   );
 	exit(exit_code);
 }
 
-void check_mode(int mode)
+void check_mode(enum MODE mode)
 {
-	if(mode)
+	if(mode == NONE)
 	{
 		fprintf(stderr, "You can only use one -c, -r, or -s.\n");
 		exit(1);
@@ -48,16 +46,17 @@ void check_mode(int mode)
 int main(int argc, char** argv)
 {
 	int c;
+	unsigned long i;
 
-	int sieve_max = 0;         //Used with MODE_RANGE and MODE_BELOW
-	//int sieve_min = 0;         //Used with MODE_RANGE
+	int sieve_max = 0;         //Used with RANGE and BELOW
+	//int sieve_min = 0;         //Used with RANGE
 	
 	FILE* outfile = stdout;
 
-	int mode = NO_MODE;
+	enum MODE mode = NONE;
 
 	uint64_t* primes = NULL;
-	size_t primes_count = 0;
+	unsigned long primes_count = 0;
 
 	if(argc == 1) usage(1);
 
@@ -68,13 +67,13 @@ int main(int argc, char** argv)
 			//check if prime
 			case 'c':
 				check_mode(mode);
-				mode = MODE_COUNT;
+				mode = COUNT;
 				sscanf(optarg, "%d", &sieve_max);
 				break;
 
 			case 'r':
 				check_mode(mode);
-				mode = MODE_RANGE;
+				mode = RANGE;
 				fprintf(stderr, "Not implemented.\n");
 				break;
 
@@ -82,7 +81,7 @@ int main(int argc, char** argv)
 			case 'b':
 				check_mode(mode);
 				sieve_max= atoi(optarg);
-				mode = MODE_BELOW;
+				mode = BELOW;
 				break;
 
 			//change output
@@ -111,9 +110,9 @@ int main(int argc, char** argv)
 
 	switch(mode)
 	{
-		case MODE_BELOW:
+		case BELOW:
 			primes_count = eratos(sieve_max, &primes);
-			for(size_t i = 0; i < primes_count; i++)
+			for(i = 0; i < primes_count; i++)
 			{
 				fprintf(outfile, "%" PRIu64 " ", primes[i]);
 			}
@@ -121,13 +120,13 @@ int main(int argc, char** argv)
 			free(primes);
 			break;
 
-		case MODE_RANGE:
+		case RANGE:
 			fprintf(stderr, "--range not yet implemented.\n");
 			break;
-		case MODE_COUNT:
-			fprintf(outfile, "%zu\n", eratos(sieve_max, NULL));	
+		case COUNT:
+			fprintf(outfile, "%lu\n", (unsigned long)eratos(sieve_max, NULL));	
 			break;
-		case NO_MODE:
+		case NONE:
 			fprintf(stderr, "No mode selected.\n");
 			usage(1);
 			break;
