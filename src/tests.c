@@ -57,19 +57,23 @@ void test_eratos()
 
 void time_eratos(uint64_t n)
 {
-	double t;
-	size_t count;
+	double counter;
+	size_t prime_count;
 	uint64_t *primes;
-	startCounter();
-	count = eratos(n, &primes);
-	t = getCounter();
-	if(count != 0)
-		printf("Generating and storing primes below %" PRIu64 " took %f seconds.\n", n, t);
+
+	startTimer();
+	prime_count = eratos(n, &primes);
+	counter = getTimer();
+	
+	if(prime_count != 0 && counter != -1)
+	{
+		printf("Generating and storing primes below %" PRIu64 " took %0.4f seconds.\n", n, counter);
+	}
 }
 
 int main()
 {
-	uint64_t test_nums [] = {30, 15485863, 1e9, 2e9};
+	uint64_t test_nums [] = {30, 1e5, 1e6, 15485863, 1e8};
 	unsigned i;
 
 	test_eratos();

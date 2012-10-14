@@ -2,33 +2,27 @@
 	http://stackoverflow.com/a/1739265
 	Oct 12, 2012
 */
-#include <inttypes.h>
-
 #ifdef WIN32
 #include <windows.h>
 
-static double PCFreq = 0.0;
-static uint64_t CounterStart = 0;
+static LARGE_INTEGER PCFreq;
+static LARGE_INTEGER CounterStart;
 
-int startCounter()
+//TODO: Better error handling
+int startTimer()
 {
-	LARGE_INTEGER li;
-	if(!QueryPerformanceFrequency(&li))
-		return -1;
-	PCFreq = li.QuadPart;
-	QueryPerformanceCounter(&li);
-	CounterStart = li.QuadPart;
-	return 0;
+	return (QueryPerformanceFrequency(&PCFreq)
+	 && QueryPerformanceCounter(&CounterStart));
 }
 
-double getCounter()
+double getTimer()
 {
 	LARGE_INTEGER li;
-	if(!QueryPerformanceFrequency(&li))
-		return -1;
-	PCFreq = li.QuadPart;
 	QueryPerformanceCounter(&li);
-	return (double)(li.QuadPart - CounterStart) / PCFreq;
+	return (double)(li.QuadPart - CounterStart.QuadPart) / PCFreq.QuadPart;
 }
+
+#else
+//TODO: Linux / Unix support
+#error "No support for nonWindows. Try winelib."
 #endif
-//TODO: Unix support
