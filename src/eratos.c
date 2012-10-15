@@ -19,7 +19,7 @@ static inline uint64_t odd_array_value_at(size_t index)
 	return (2 * index) + 1;
 }
 
-size_t eratos(int n, uint64_t** primes_array)
+size_t eratos(uint64_t n, uint64_t** primes_array)
 {
 	// If we're not given an array to store output, don't.
 	bool not_null_array = !!primes_array;

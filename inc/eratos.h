@@ -19,7 +19,7 @@ extern "C"
 	TODO: Segmented Sieve of Eratosthenes 
 		http://programmingpraxis.com/2010/02/05/segmented-sieve-of-eratosthenes/
 */
-size_t eratos(int n, uint64_t** primes_array);
+size_t eratos(uint64_t n, uint64_t** primes_array);
 
 #ifdef __cplusplus
 }
