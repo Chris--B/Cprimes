@@ -36,7 +36,7 @@ void usage(int exit_code)
 
 void check_mode(enum MODE mode)
 {
-	if(mode == NONE)
+	if(mode != NONE)
 	{
 		fprintf(stderr, "You can only use one -c, -r, or -s.\n");
 		exit(1);
@@ -48,8 +48,8 @@ int main(int argc, char** argv)
 	int c;
 	unsigned long i;
 
-	int sieve_max = 0;         //Used with RANGE and BELOW
-	//int sieve_min = 0;         //Used with RANGE
+	uint64_t sieve_max = 0;         //Used with RANGE and BELOW
+	//uint64_t sieve_min = 0;         //Used with RANGE
 	
 	FILE* outfile = stdout;
 
@@ -68,7 +68,7 @@ int main(int argc, char** argv)
 			case 'c':
 				check_mode(mode);
 				mode = COUNT;
-				sscanf(optarg, "%d", &sieve_max);
+				sscanf(optarg, "%" PRIu64 , &sieve_max);
 				break;
 
 			case 'r':
@@ -80,7 +80,7 @@ int main(int argc, char** argv)
 			//or setup a sieve
 			case 'b':
 				check_mode(mode);
-				sieve_max= atoi(optarg);
+				sscanf(optarg, "%" PRIu64 , &sieve_max);
 				mode = BELOW;
 				break;
 

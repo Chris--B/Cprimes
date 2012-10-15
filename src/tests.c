@@ -73,7 +73,7 @@ void time_eratos(uint64_t n)
 
 int main()
 {
-	uint64_t test_nums [] = {30, 1e5, 1e6, 15485863, 1e8};
+	uint64_t test_nums [] = {30, 1e5, 1e6, 15485863, 1e8, 5e9};
 	unsigned i;
 
 	test_eratos();
