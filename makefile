@@ -21,8 +21,6 @@ $(MAIN_PROG): makefile
 .PHONY: clean test
 
 test:
-	@echo 
-	@echo ------TESTING------
 	@python3 -m unittest -v
 
 clean:
