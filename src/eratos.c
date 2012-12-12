@@ -1,4 +1,5 @@
-#include "primes.h"
+#include "eratos.h"
+#include "estimate.h"
 
 #include <limits.h>
 #include <math.h>

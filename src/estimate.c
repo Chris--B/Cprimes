@@ -1,5 +1,3 @@
-#include "primes.h"
-
 #include <math.h>
 
 #ifdef __cplusplus

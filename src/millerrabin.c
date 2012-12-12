@@ -1,6 +1,6 @@
-#include <gmp.h>
+#include "millerrabin.h"
 
-#include "primes.h"
+#include <gmp.h>
 
 /*
 	Run a single round of the Miller-Rabin primality test.

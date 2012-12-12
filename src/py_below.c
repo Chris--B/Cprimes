@@ -1,5 +1,7 @@
 #include <Python.h>
-#include "primes.h"
+
+#include "eratos.h"
+#include "estimate.h"
 #include "limits.h"
 
 PyObject* py_below(uint64_t num)

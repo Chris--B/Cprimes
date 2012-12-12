@@ -3,7 +3,7 @@ MAIN_PROG = pyprimes.dll
 PY_LIBDIR = "C:\Python32\DLLs"
 PY_INCDIR = "C:\Python32\include"
 
-CFLAGS += -I.. -I$(PY_INCDIR)
+CFLAGS += -I..\inc -I$(PY_INCDIR)
 
 #Oh god why
 OBJS = $(addsuffix .o, $(notdir $(basename $(wildcard src/*.c))))
