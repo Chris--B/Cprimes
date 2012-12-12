@@ -2,7 +2,6 @@
 
 #include "defines.h"
 
-
 START_EXTERN_C
 
 extern uint64_t cache [];

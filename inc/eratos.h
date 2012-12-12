@@ -29,3 +29,4 @@ static inline uint64_t sieve_value_at(size_t index)
 }
 
 END_EXTERN_C
+

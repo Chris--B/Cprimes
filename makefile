@@ -26,4 +26,4 @@ test:
 clean:
 	@rm -fv $(MAIN_PROG)
 	@cd bin && rm -fv *.o
-
+	@rm -fv primes.h

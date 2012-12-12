@@ -17,3 +17,6 @@
 
 #Compiled Python files
 *.pyc
+
+#Product of building
+primes.h
