@@ -1,15 +1,15 @@
-from ctypes import *
+import ctypes as _ctypes
 
-cprimeslib = CDLL("pyprimes", use_errno = True)
+cprimeslib = _ctypes.CDLL("cprimes", use_errno = True)
 
 #TODO: Seriously reconsider py_below. We need benchmarks.
 _below = cprimeslib.py_below
-_below.restype = py_object
-_below.argtypes = [c_uint64]
+_below.restype = _ctypes.py_object
+_below.argtypes = [_ctypes.c_uint64]
 
 def below(num):
 	"""
-	Returns a list of all primes <= num, an exact integer.
+	Returns a list of all primes in the range [2, num]. It is often faster to use is_prime to check against a single instance of a number, rather than check for existance in this list. [Citation needed]
 
 	>>>pyprimes.below(30)
 	[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
@@ -28,12 +28,12 @@ def below(num):
 	return _below(num)
 
 _millerrabin_round = cprimeslib.millerrabin_round
-_millerrabin_round.restype = c_int
-_millerrabin_round.argtypes = [c_char_p, c_char_p, c_uint64, c_uint64]
+_millerrabin_round.restype = _ctypes.c_int
+_millerrabin_round.argtypes = [_ctypes.c_char_p, _ctypes.c_char_p, _ctypes.c_uint64, _ctypes.c_uint64]
 
 def millerrabin_round(num, d, s, witness):
-	num_str = create_string_buffer(bytes(str(num), 'utf-8'))
-	d_str = create_string_buffer(bytes(str(d), 'utf-8'))
+	num_str = _ctypes.create_string_buffer(bytes(str(num), 'utf-8'))
+	d_str = _ctypes.create_string_buffer(bytes(str(d), 'utf-8'))
 
 	return bool(_millerrabin_round(num_str, d_str, s, witness))
 
