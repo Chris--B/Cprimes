@@ -1,39 +1,49 @@
-import ctypes as _ctypes
+from ctypes import *
+import os
 
-cprimeslib = _ctypes.CDLL("cprimes", use_errno = True)
+cprimeslib = CDLL("cprimes")
 
 #TODO: Seriously reconsider py_below. We need benchmarks.
-_below = cprimeslib.py_below
-_below.restype = _ctypes.py_object
-_below.argtypes = [_ctypes.c_uint64]
+_eratos = cprimeslib.eratos
+_eratos.restype = c_int
+_eratos.argtypes = [c_uint64, POINTER(POINTER(c_uint64)), POINTER(c_size_t)]
 
 def below(num):
 	"""
-	Returns a list of all primes in the range [2, num]. It is often faster to use is_prime to check against a single instance of a number, rather than check for existance in this list. [Citation needed]
+	Returns a list of all primes in the range [2, num). It is often faster to use is_prime when checking against a single instance of a number, rather than check for existance in this list. [Citation needed]
 
-	>>>pyprimes.below(30)
+	>>> pyprimes.below(30)
 	[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
 	"""
 	if not isinstance(num, int):
 		#Errors like proper grammar too.
 		t = num.__class__.__name__
-		if(t[0] in "aeiouAEIOU"):
+		if(t[0].lower() in "aeiouh"):
 			t = "an {}".format(t)
 		else:
 			t = "a {}".format(t)
 
 		raise TypeError("Num must be an int, not {}".format(t))
-	elif num < 0:
-		raise ValueError("Num must be nonnegative.")
-	return _below(num)
+	elif num < 2:
+		return []
+
+	primes_arr = pointer(c_uint64())
+	count = c_size_t()
+	set_errno(0)
+	err = _eratos(num, byref(primes_arr), byref(count))
+	if err:
+		raise Exception(os.strerror(err))
+
+	primes = primes_arr[:count.value]
+	return primes
 
 _millerrabin_round = cprimeslib.millerrabin_round
-_millerrabin_round.restype = _ctypes.c_int
-_millerrabin_round.argtypes = [_ctypes.c_char_p, _ctypes.c_char_p, _ctypes.c_uint64, _ctypes.c_uint64]
+_millerrabin_round.restype = c_int
+_millerrabin_round.argtypes = [c_char_p, c_char_p, c_uint64, c_uint64]
 
 def millerrabin_round(num, d, s, witness):
-	num_str = _ctypes.create_string_buffer(bytes(str(num), 'utf-8'))
-	d_str = _ctypes.create_string_buffer(bytes(str(d), 'utf-8'))
+	num_str = create_string_buffer(bytes(str(num), 'utf-8'))
+	d_str = create_string_buffer(bytes(str(d), 'utf-8'))
 
 	return bool(_millerrabin_round(num_str, d_str, s, witness))
 

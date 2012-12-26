@@ -5,14 +5,12 @@ class Testcprimes(unittest.TestCase):
 	def test_below(self):
 		self.assertEqual(cprimes.below(0), [])
 		self.assertEqual(cprimes.below(30), [2, 3, 5, 7, 11, 13, 17, 19, 23, 29])
-		self.assertEqual(len(cprimes.below(15485863)), 1000000)
+		self.assertEqual(len(cprimes.below(15485864)), 1000000)
 		with self.assertRaises(TypeError):
 			cprimes.below(30.0)
-		with self.assertRaises(ValueError):
-			cprimes.below(-1)
 
 	def test_factor(self):
-		print("Factor not implemented!")
+		print("Factor not implemented.")
 		return
 		#Two 8-digit prime factors of Googolplex + 10
 		#http://www.alpertron.com.ar/googol.pl?digits=8
