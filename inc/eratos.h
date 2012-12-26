@@ -14,19 +14,7 @@ enum Primality { MaybePrime, NotPrime };
 
 	See: http://programmingpraxis.com/2009/02/19/sieve-of-eratosthenes/
 */
-int eratos_sieve(uint64_t num, uint8_t** sieve_p);
-
-/*
-	Sieves contains only odd numbers, so interfacing them can be difficult.
-*/
-static inline size_t sieve_index_of(uint64_t value)
-{
-	return (value - 1)/ 2;
-}
-static inline uint64_t sieve_value_at(size_t index)
-{
-	return (2 * index) + 1;
-}
+int eratos(uint64_t num, uint64_t** primes_array, size_t *len);
 
 END_EXTERN_C
 
