@@ -4,6 +4,6 @@
 
 START_EXTERN_C
 
-int millerrabin_round(const char* num_str, const char* d_str, uint64_t s, uint64_t witness);
+int miller_rabin(const char* num_str);
 
 END_EXTERN_C
