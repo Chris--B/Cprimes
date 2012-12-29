@@ -1,14 +1,24 @@
 #include "miller_rabin.h"
+#include "eratos.h"
 
 #include <gmp.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 enum {false, true};
 
+//TODO
 const char* false_positives[] = {
-	"2047", "1373653", "25326001", "3215031751", "2152302898747", "3474749660383", "341550071728321", "3825123056546413051",
 	NULL
 };
+
+const uint64_t primes [] = {
+	2, 3, 5, 7, 11, 13, 17, 
+	0
+};
+#define PRIMES_LEN (sizeof(primes) / sizeof(primes[0]) - 1)
+#define PRIMES_MAX primes[PRIMES_LEN - 1]
 
 /*
 	Run a single round of the Miller-Rabin primality test.
@@ -67,7 +77,6 @@ end:
 	return maybe_prime;
 }
 
-
 /*
 	Returns nonzero when the number in num_str is probably prime.
 */
@@ -77,15 +86,18 @@ int miller_rabin(const char* num_str)
 	mpz_t d;
 	mpz_t a;
 	mpz_t tmp;
-	
-	uint64_t s = 0;
+
+	gmp_randstate_t state;
+
+	uint64_t s;
 	int maybe_prime;
-	int i;
+	size_t i;
+
+	srand(time(NULL));
 	
 	for(i = 0; false_positives[i]; ++i) {
 		if(!strcmp(num_str, false_positives[i])) {
-			maybe_prime = false;
-			goto end;
+			return false;
 		}
 	}
 
@@ -97,19 +109,36 @@ int miller_rabin(const char* num_str)
 	mpz_init(a);
 
 	mpz_init(tmp);
-	mpz_mod_ui(tmp, num, 2);
-	if(!mpz_cmp_ui(tmp, 0) && mpz_cmp_ui(num, 2)) { //num is even and not 2
+
+	gmp_randinit_default(state);
+
+	//Doesn't play nice for small numbers....
+	if(mpz_cmp_ui(num, PRIMES_MAX + 1) < 0) {
+		for(i = 0; primes[i]; ++i) {
+			if(!mpz_cmp_ui(num, primes[i])) {
+				maybe_prime = true;
+				goto end;
+			}
+		}
 		maybe_prime = false;
 		goto end;
 	}
 
-	while(!mpz_cmp_ui(d, 2)) {
-		mpz_div_ui(d, d, 2);
-		++s;
+	if(mpz_even_p(num)) { //even?
+		if(!mpz_cmp_ui(num, 2)) {
+			maybe_prime = true; //2 is prime
+		} else {
+			maybe_prime = false; //no other evens are
+		}
+		goto end;
 	}
 
-	for(i = 0; i < 20; ++i) {
-		//pick an a
+	for(s = 0; !mpz_cmp_ui(d, 2); ++s) {
+		mpz_div_ui(d, d, 2);
+	}
+
+	for(i = 0; i < PRIMES_LEN; ++i) {
+		mpz_set_ui(a, primes[i]);
 		if(!_miller_rabin_round(&num, &d, &a, s)) {
 			maybe_prime = false;
 			goto end;
@@ -121,5 +150,6 @@ end:
 	mpz_clear(d);
 	mpz_clear(a);
 	mpz_clear(tmp);
+	gmp_randclear(state);
 	return maybe_prime;
 }

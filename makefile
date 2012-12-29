@@ -3,9 +3,9 @@ MAIN_LIB  = cprimes.dll
 PY_LIBDIR = "C:\Python32\DLLs"
 GMP_LIB   = gmp-3
 
-TEST_CMD  = python3 -m unittest -v
+TEST_CMD  = python3 -m unittest discover -v
 
-CFLAGS += -I..\inc
+CFLAGS += -I..\inc -O2
 
 #Oh god why
 OBJS = $(addsuffix .o, $(notdir $(basename $(wildcard src/*.c))))
