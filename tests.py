@@ -38,3 +38,6 @@ class Testcprimes(unittest.TestCase):
 
 		with self.assertRaises(TypeError):
 			cprimes.is_prime(557.0)
+
+if __name__ == "__main__":
+	pass

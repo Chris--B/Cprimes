@@ -1,7 +1,13 @@
 from ctypes import *
+import math
 import os
+import sys
 
-cprimeslib = CDLL("cprimes")
+try:
+	cprimeslib = CDLL("cprimes")
+except Exception as e:
+	print("Error finding cprimes lib:\n\t{}".format(e))
+	sys.exit(1)
 
 #TODO: Seriously reconsider py_below. We need benchmarks.
 _eratos = cprimeslib.eratos
