@@ -12,14 +12,14 @@ OBJS = $(addsuffix .o, $(notdir $(basename $(wildcard src/*.c))))
 
 export 
 
-all: $(MAIN_LIB)
+all: $(MAIN_LIB) test
 
 $(MAIN_LIB):
 	@make -C bin $(addprefix -, $(MAKEFLAGS)) $(OBJS)
 	$(CC) -o $@ -shared $(addprefix bin/, $(OBJS)) -l$(GMP_LIB) -L$(PY_LIBDIR) -lpython3
 	strip $@
 
-.PHONY: clean test
+.PHONY: clean test $(MAIN_LIB)
 
 test:
 	$(TEST_CMD)

@@ -13,11 +13,11 @@ const char* false_positives[] = {
 	NULL
 };
 
+//sufficient for num <= 341,550,071,728,321
 const uint64_t primes [] = {
-	2, 3, 5, 7, 11, 13, 17, 
-	0
+	2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251
 };
-#define PRIMES_LEN (sizeof(primes) / sizeof(primes[0]) - 1)
+#define PRIMES_LEN (sizeof(primes) / sizeof(primes[0]))
 #define PRIMES_MAX primes[PRIMES_LEN - 1]
 
 /*
@@ -114,7 +114,7 @@ int miller_rabin(const char* num_str)
 
 	//Doesn't play nice for small numbers....
 	if(mpz_cmp_ui(num, PRIMES_MAX + 1) < 0) {
-		for(i = 0; primes[i]; ++i) {
+		for(i = 0; i < PRIMES_LEN; ++i) {
 			if(!mpz_cmp_ui(num, primes[i])) {
 				maybe_prime = true;
 				goto end;
@@ -133,11 +133,13 @@ int miller_rabin(const char* num_str)
 		goto end;
 	}
 
+	//get D and S ready for _miller_round
 	for(s = 0; !mpz_cmp_ui(d, 2); ++s) {
 		mpz_div_ui(d, d, 2);
 	}
 
-	for(i = 0; i < PRIMES_LEN; ++i) {
+	//select witnesses from the list of primes
+	for(i = 0; i < PRIMES_LEN && primes[i] < 73; ++i) {
 		mpz_set_ui(a, primes[i]);
 		if(!_miller_rabin_round(&num, &d, &a, s)) {
 			maybe_prime = false;
