@@ -50,7 +50,6 @@ _miller_rabin.argtypes = [c_char_p]
 def is_prime(num):
 	if not isinstance(num, int):
 		raise TypeError("num must be an int")
-	num_str = create_string_buffer(str(num).encode('utf-8'))
-	return bool(_miller_rabin(num_str))
+	return bool(_miller_rabin(str(num).encode('utf-8')))
 
 __all__ = ["is_prime", "below"]
