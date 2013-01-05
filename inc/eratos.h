@@ -3,6 +3,7 @@
 #include "defines.h"
 
 #include <errno.h>
+#include <stdlib.h>
 
 START_EXTERN_C
 
