@@ -21,7 +21,11 @@ static inline uint64_t odd_array_value_at(size_t index) {
 CPRIMES_DEC int eratos(uint64_t num, uint64_t** primes_array, size_t *len) {
 	// If we're not given an array to store output, don't.
 	int not_null_array = !!primes_array;
-
+	if(num == 0) {
+		*len = 0;
+		*primes_array = NULL;
+		return errno = 0;
+	}
 	/*	
 		N is the largest number in the sieve. 
 		If it's even, round down to the nearest odd. (aka subtract one)

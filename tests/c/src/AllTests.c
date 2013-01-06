@@ -4,7 +4,9 @@
 
 #include "CuTest.h"
 
+//I'm too lazy for a headerfile.
 CuSuite* EratosGetSuite();
+CuSuite* MillerRabinGetSuite();
 
 void RunAllTests(void) 
 {
@@ -12,6 +14,7 @@ void RunAllTests(void)
     CuSuite* suite = CuSuiteNew();
 
     CuSuiteAddSuite(suite, EratosGetSuite());
+    CuSuiteAddSuite(suite, MillerRabinGetSuite());
 
    	CuSuiteRun(suite);
     CuSuiteSummary(suite, output);

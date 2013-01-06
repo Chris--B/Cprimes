@@ -4,12 +4,11 @@ import os
 import sys
 
 try:
-	cprimeslib = CDLL("cprimes")
+	cprimeslib = CDLL("libcprimes.dll")
 except Exception as e:
-	print("Error finding cprimes lib:\n\t{}".format(e))
+	print("Error finding libcprimes:\n\t{}".format(e))
 	sys.exit(1)
 
-#TODO: Seriously reconsider py_below. We need benchmarks.
 _eratos = cprimeslib.eratos
 _eratos.restype = c_int
 _eratos.argtypes = [c_uint64, POINTER(POINTER(c_uint64)), POINTER(c_size_t)]

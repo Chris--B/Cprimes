@@ -1,28 +1,25 @@
 
-CPRIMESLIB  = libcprimes.dll
 CPRIMESROOT = ../..
 
-NAME = test.exe
+NAME = run.exe
 
 LDFLAGS += -L$(CPRIMESROOT) -lcprimes
 
-all: $(NAME)
+all: build
+
+build: $(NAME)
 
 #Oh god why
 OBJS = $(addsuffix .o, $(notdir $(basename $(wildcard src/*.c))))
 
 export
 
-$(NAME): $(CPRIMESLIB)
+$(NAME):
 	@make -C obj $(addprefix -, $(MAKEFLAGS)) $(OBJS)
 	@echo ...
 	$(CC) -o $@ $(addprefix obj/, $(OBJS)) $(LDFLAGS)
 
-$(CPRIMESLIB): $(CPRIMESROOT)/$(CPRIMESLIB)
-	cp $^ $@
-
-$(CPRIMESROOT)/$(CPRIMESLIB):
-	cd $(CPRIMESROOT) && make
-
 clean:
-	@rm -vf $(NAME) obj/*.o $(CPRIMESLIB)
+	@rm -vf $(NAME) obj/*.o
+
+.PHONY: clean $(NAME)

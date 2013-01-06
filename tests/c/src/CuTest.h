@@ -71,11 +71,15 @@ void CuAssertPtrEquals_LineMsg(CuTest* tc,
 	const char* file, int line, const char* message, 
 	void* expected, void* actual);
 
+char* CuBuffPrintf(const char* msg, ...);
+
 /* public assert functions */
 
 #define CuFail(tc, ms)                        CuFail_Line(  (tc), __FILE__, __LINE__, NULL, (ms))
 #define CuAssert(tc, ms, cond)                CuAssert_Line((tc), __FILE__, __LINE__, (ms), (cond))
 #define CuAssertTrue(tc, cond)                CuAssert_Line((tc), __FILE__, __LINE__, "assert failed", (cond))
+
+#define CuAssertf(tc, cond, msg, ...)         CuAssert(tc, CuBuffPrintf(msg, __VA_ARGS__), cond)
 
 #define CuAssertStrEquals(tc,ex,ac)           CuAssertStrEquals_LineMsg((tc),__FILE__,__LINE__,NULL,(ex),(ac))
 #define CuAssertStrEquals_Msg(tc,ms,ex,ac)    CuAssertStrEquals_LineMsg((tc),__FILE__,__LINE__,(ms),(ex),(ac))

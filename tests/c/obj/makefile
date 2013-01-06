@@ -7,4 +7,3 @@ vpath %.h ..
 INC_DIR = ../$(CPRIMESROOT)/inc
 
 CFLAGS = -I$(INC_DIR)
-

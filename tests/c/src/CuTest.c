@@ -337,3 +337,17 @@ void CuSuiteDetails(CuSuite* testSuite, CuString* details)
 		CuStringAppendFormat(details, "Fails: %d\n",  testSuite->failCount);
 	}
 }
+
+/*-------------------------------------------------------------------------*
+ * CuBufPrintf -- Added by Chris B, Jan 2013
+ *-------------------------------------------------------------------------*/
+char* CuBuffPrintf(const char* msg, ...)
+{
+	va_list args;
+	static char buf[STRING_MAX];
+	va_start(args, msg);
+	vsprintf(buf, msg, args);
+	va_end(args);
+	buf[STRING_MAX - 1] = '\0'; //just incase.
+	return buf;
+}
