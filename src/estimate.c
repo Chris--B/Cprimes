@@ -1,14 +1,16 @@
+#include "estimate.h"
+
 #include <math.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-double estimatelo(double num)
+CPRIMES_DEC double estimatelo(double num)
 {
 	return num;
 }
-double estimatehi(double num)
+CPRIMES_DEC double estimatehi(double num)
 {
 	return (num / log(num) * (1 + 1.2762 / log(num)) + 1);
 }

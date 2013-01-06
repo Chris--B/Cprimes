@@ -68,7 +68,7 @@ end:
 /*
 	Returns nonzero when the number in num_str is probably prime.
 */
-int miller_rabin(const char* num_str)
+CPRIMES_DEC int miller_rabin(const char* num_str)
 {
 	mpz_t num;
 	mpz_t d;

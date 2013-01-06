@@ -1,20 +1,28 @@
 
-NAME = doit.exe
-INC_DIR = ..\..\inc
+CPRIMESLIB  = libcprimes.dll
+CPRIMESROOT = ../..
 
-CFLAGS += -I $(INC_DIR)
-LDFLAGS += -lgmp
+NAME = test.exe
 
-#Oh god why
-OBJS = $(addsuffix .o, $(notdir $(basename $(wildcard ../../src/*.c))))
+LDFLAGS += -L$(CPRIMESROOT) -lcprimes
 
 all: $(NAME)
 
-vpath %.o ..\..\bin
-vpath %.h $(INC_DIR)
+#Oh god why
+OBJS = $(addsuffix .o, $(notdir $(basename $(wildcard src/*.c))))
 
-$(NAME): AllTests.o CuTest.o test_eratos.o $(OBJS)
-	$(CC) $^ -o $@
+export
+
+$(NAME): $(CPRIMESLIB)
+	@make -C obj $(addprefix -, $(MAKEFLAGS)) $(OBJS)
+	@echo ...
+	$(CC) -o $@ $(addprefix obj/, $(OBJS)) $(LDFLAGS)
+
+$(CPRIMESLIB): $(CPRIMESROOT)/$(CPRIMESLIB)
+	cp $^ $@
+
+$(CPRIMESROOT)/$(CPRIMESLIB):
+	cd $(CPRIMESROOT) && make
 
 clean:
-	@rm -vf $(NAME) *.o
+	@rm -vf $(NAME) obj/*.o $(CPRIMESLIB)

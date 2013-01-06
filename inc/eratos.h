@@ -15,7 +15,7 @@ enum Primality { MaybePrime, NotPrime };
 
 	See: http://programmingpraxis.com/2009/02/19/sieve-of-eratosthenes/
 */
-int eratos(uint64_t num, uint64_t** primes_array, size_t *len);
+CPRIMES_DEC int eratos(uint64_t num, uint64_t** primes_array, size_t *len);
 
 END_EXTERN_C
 

@@ -18,7 +18,7 @@ static inline uint64_t odd_array_value_at(size_t index) {
 	return (2 * index) + 1;
 }
 
-int eratos(uint64_t num, uint64_t** primes_array, size_t *len) {
+CPRIMES_DEC int eratos(uint64_t num, uint64_t** primes_array, size_t *len) {
 	// If we're not given an array to store output, don't.
 	int not_null_array = !!primes_array;
 

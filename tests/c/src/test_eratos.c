@@ -3,6 +3,7 @@
 
 #include <errno.h>
 #include <stdio.h>
+#include <string.h>
 
 void test_below_31_correct(CuTest* tc)
 {
@@ -19,7 +20,7 @@ void test_below_31_correct(CuTest* tc)
 	CuAssert(tc, strerror(res), res == 0);
 	CuAssert(tc, "Length was not correct.", len == 10);
 	for(i = 0; i < len; ++i) {
-		snprintf(buff, 100, "\n\tPrime at index %u was %" PRIu64 ", but expected %" PRIu64 ".", i, primes[i], knowns[i]);
+		snprintf(buff, 100, "\n\tPrime at index %u was %.0f, but expected %.0f.", i, (double)primes[i], (double)knowns[i]);
 		CuAssert(tc, buff, primes[i] == knowns[i]);
 	}
 }

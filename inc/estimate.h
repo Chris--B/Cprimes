@@ -10,7 +10,7 @@ START_EXTERN_C
 
 	See: http://primes.utm.edu/howmany.shtml
 */
-double estimatelo(double num);
-double estimatehi(double num);
+CPRIMES_DEC double estimatelo(double num);
+CPRIMES_DEC double estimatehi(double num);
 
 END_EXTERN_C

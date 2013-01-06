@@ -4,6 +4,6 @@
 
 START_EXTERN_C
 
-int miller_rabin(const char* num_str);
+CPRIMES_DEC int miller_rabin(const char* num_str);
 
 END_EXTERN_C
