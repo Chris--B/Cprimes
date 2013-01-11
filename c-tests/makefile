@@ -1,7 +1,7 @@
 
-CPRIMESROOT = ../..
+CPRIMESROOT = ..
 
-NAME = run.exe
+NAME = run-tests.exe
 
 LDFLAGS += -L$(CPRIMESROOT) -lcprimes
 

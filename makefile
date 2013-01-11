@@ -1,43 +1,50 @@
 
-MAIN_LIB  = libcprimes.dll
-GMP_LIB   = gmp-3
+MAIN_LIB  = cprimes.dll
 
-CFLAGS += -I..\inc -O2 -DNDEBUG -DMAKINGDLL
-LDFLAGS = -shared -l$(GMP_LIB)
+CFLAGS := -I..\inc -O2 -DNDEBUG -DMAKINGDLL
 
 #Oh god why
 OBJS = $(addsuffix .o, $(notdir $(basename $(wildcard src/*.c))))
 
+#You may want to change this
+PYTHON_DIR = \Python33
+
 export 
 
 all: build
+	@echo Build sucessful
 
 build: $(MAIN_LIB)
-	@make -C tests/c build
+	@make -C c-tests build
 
 install: build
-	@echo Try again later
+	cp cprimes.py $(PYTHON_DIR)\Lib\cprimes.py
+	cp cprimes.dll $(PYTHON_DIR)\DLLs\cprimes.dll
+
+uninstall:
+	@rm -fv $(PYTHON_DIR)\Lib\cprimes.py
+	@rm -fv $(PYTHON_DIR)\DLLs\cprimes.dll
 
 $(MAIN_LIB):
 	@make -C obj $(addprefix -, $(MAKEFLAGS)) $(OBJS)
-	$(CC) -o $@ $(LDFLAGS) $(addprefix obj/, $(OBJS))
+	$(CC) -o $@ -shared $(addprefix obj/, $(OBJS)) -lgmp
 
 clean:
 	@rm -fv $(MAIN_LIB)
 	@cd obj && rm -fv *.o
 	@rm -fv primes.h
 	@rm -fvr __pycache__
-	@make -C tests/c clean
+	@make -C c-tests clean
 
 test: c-test py-test
 
 c-test:
 	@echo Running C-unittests
-	@make -s -C tests/c build
-	@tests/c/run
+	@make -s -C c-tests build
+	@c-tests\run-tests
 
 py-test:
 	@echo Running Python-unittests
-	@python3 tests/python/tests.py
+	@python3 cprimes-tests.py
 
 .PHONY: clean test $(MAIN_LIB) build install test c-test py-test

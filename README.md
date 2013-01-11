@@ -20,6 +20,6 @@ TODO
 
 3) Benchmarks. I wrote part of the Python wrappers in C because I though it'd be more efficient, but I don't have all that much evidence for the case. Setting up some tests were amazing in making sure everything works. Benchmarks are a must.
 
-4) Test the C code. I have what I feel is fairly comprehensive testing on the Python wrappings, and to an extent that ensures the C code works properly, but I'd like to be sure.
+4) Ruby, C#, and Java bindings. In that order, unless I get caught up in some new hype.
 
-5) Ruby, C#, and Java bindings. In that order, unless I get caught up in some new hype.
+5) Build 'primes.h'. A proper c-interface for the DLL would be nice, but I don't want it to depend on a bunch of little header files.

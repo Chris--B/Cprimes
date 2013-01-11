@@ -4,7 +4,7 @@ import os
 import sys
 
 try:
-	cprimeslib = CDLL("libcprimes.dll")
+	cprimeslib = CDLL("cprimes.dll")
 except Exception as e:
 	print("Error finding libcprimes:\n\t{}".format(e))
 	sys.exit(1)
@@ -34,7 +34,6 @@ def below(num):
 
 	primes_arr = pointer(c_uint64())
 	count = c_size_t()
-	set_errno(0)
 	err = _eratos(num, byref(primes_arr), byref(count))
 	if err:
 		raise Exception(os.strerror(err))
