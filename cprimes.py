@@ -1,12 +1,14 @@
 from ctypes import *
 import math
 import os
+import string
 import sys
 
+#TODO: Unix friendly
 try:
-	cprimeslib = CDLL("cprimes.dll")
+	cprimeslib = cdll.LoadLibrary("cprimes.dll")
 except Exception as e:
-	print("Error finding libcprimes:\n\t{}".format(e))
+	print("Error finding cprimes:\n\t{}".format(e))
 	sys.exit(1)
 
 _eratos = cprimeslib.eratos
@@ -22,13 +24,13 @@ def below(num):
 	"""
 	if not isinstance(num, int):
 		#Errors like proper grammar too.
-		t = num.__class__.__name__
-		if(t[0].lower() in "aeiouh"):
-			t = "an {}".format(t)
+		text = num.__class__.__name__
+		if(text[0].lower() in "aeiouh"):
+			text = "an {}".format(text)
 		else:
-			t = "a {}".format(t)
+			text = "a {}".format(text)
 
-		raise TypeError("Num must be an int, not {}".format(t))
+		raise TypeError("Num must be an int, not {}".format(text))
 	elif num < 2:
 		return []
 
@@ -46,8 +48,22 @@ _miller_rabin.restype = c_int
 _miller_rabin.argtypes = [c_char_p]
 
 def is_prime(num):
-	if not isinstance(num, int):
-		raise TypeError("num must be an int")
-	return bool(_miller_rabin(str(num).encode('utf-8')))
+	if isinstance(num, int):
+		num_arg = str(num).encode('utf-8')
+	elif isinstance(num, str):
+		try:
+			int(num)
+		except ValueError as e:
+			raise e
+		num_arg = num.encode('utf-8')
+	else:
+		text = num.__class__.__name__
+		if(text[0].lower() in "aeiouh"):
+			text = "an {}".format(text)
+		else:
+			text = "a {}".format(text)
+		raise TypeError("Num must be an int or str, not {}".format(text))
+
+	return bool(_miller_rabin(num_arg))
 
 __all__ = ["is_prime", "below"]
