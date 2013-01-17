@@ -1,7 +1,7 @@
 
 MAIN_LIB  = cprimes.dll
 
-CFLAGS := -I..\inc -O2 -DNDEBUG -DMAKINGDLL
+CFLAGS := -I..\inc -O2 -DNDEBUG -DMAKINGDLL -Wall -Wextra
 
 #Oh god why
 OBJS = $(addsuffix .o, $(notdir $(basename $(wildcard src/*.c))))
@@ -19,11 +19,11 @@ build: $(MAIN_LIB)
 
 install: build
 	cp cprimes.py $(PYTHON_DIR)\Lib\cprimes.py
-	cp cprimes.dll $(PYTHON_DIR)\DLLs\cprimes.dll
+	cp cprimes.dll \PATH\cprimes.dll
 
 uninstall:
 	@rm -fv $(PYTHON_DIR)\Lib\cprimes.py
-	@rm -fv $(PYTHON_DIR)\DLLs\cprimes.dll
+	@rm -fv \PATH\cprimes.dll
 
 $(MAIN_LIB):
 	@make -C obj $(addprefix -, $(MAKEFLAGS)) $(OBJS)

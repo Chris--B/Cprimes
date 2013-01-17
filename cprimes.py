@@ -11,6 +11,19 @@ except Exception as e:
 	print("Error finding cprimes:\n\t{}".format(e))
 	sys.exit(1)
 
+_lucas_lehmer = cprimeslib.lucas_lehmer
+_lucas_lehmer.restype = c_int
+_lucas_lehmer.argtypes = [c_uint64]
+
+def lucas_lehmer(power):
+	"""
+	Returns True when 2^power - 1 is prime, and False otherwise. If power is not prime, a ValueError is raised.
+	"""
+	if not is_prime(power):
+		raise ValueError("power must be prime.")
+	return bool(_lucas_lehmer(power))
+
+
 _eratos = cprimeslib.eratos
 _eratos.restype = c_int
 _eratos.argtypes = [c_uint64, POINTER(POINTER(c_uint64)), POINTER(c_size_t)]
@@ -66,4 +79,4 @@ def is_prime(num):
 
 	return bool(_miller_rabin(num_arg))
 
-__all__ = ["is_prime", "below"]
+__all__ = ["is_prime", "below", "lucas_lehmer"]
