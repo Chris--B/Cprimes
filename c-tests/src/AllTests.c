@@ -8,8 +8,7 @@
 CuSuite* EratosGetSuite();
 CuSuite* MillerRabinGetSuite();
 
-void RunAllTests(void) 
-{
+void RunAllTests(void) {
     CuString *output = CuStringNew();
     CuSuite* suite = CuSuiteNew();
 
@@ -24,8 +23,7 @@ void RunAllTests(void)
     CuSuiteDelete(suite);
 }
 
-int main(void)
-{
+int main(void) {
     RunAllTests();
     return 0;
 }

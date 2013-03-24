@@ -14,8 +14,7 @@ uint64_t known[] = {
 	Given an array of LEN primes, PRIMES, generate an array of initial offsets starting at MIN and store them in OFFSETS. The function does NOT allocate this buffer.
 	Call this function first, and once, per seiving.
 */
-void init_offsets(uint64_t min, const uint64_t *primes, uint64_t len, uint64_t *offsets)
-{
+void init_offsets(uint64_t min, const uint64_t *primes, uint64_t len, uint64_t *offsets) {
 	size_t i;
 	for(i = 0; i < len; ++i) {
 		offsets[i] = ((min + 1 + primes[i]) / -2) % primes[i];
@@ -26,8 +25,7 @@ void init_offsets(uint64_t min, const uint64_t *primes, uint64_t len, uint64_t *
 	Given an array of LEN primes, PRIMES, update an array of offsets for block size BLOCK_SIZE and store them in OFFSETS. The function does NOT allocate this buffer.
 	Call this function after INIT_OFFSETS, using the same buffer for OFFSETS.
 */
-void update_offsets(const uint64_t *primes, uint64_t len, size_t block_size, uint64_t *offsets)
-{
+void update_offsets(const uint64_t *primes, uint64_t len, size_t block_size, uint64_t *offsets) {
 	size_t i;
 	for(i = 0; i < len; ++i) {
 		offsets[i] = (offsets[i] - block_size) % primes[i];
@@ -43,8 +41,7 @@ void update_offsets(const uint64_t *primes, uint64_t len, size_t block_size, uin
 
 	Return errno - nonzero if something went wrong, zero if everything's cool.
 */
-int seg_eratos(uint64_t min, uint64_t max, size_t block, uint64_t **primes, size_t *count)
-{
+int seg_eratos(uint64_t min, uint64_t max, size_t block, uint64_t **primes, size_t *count) {
 	size_t i;
 
 	if(min >= max) {

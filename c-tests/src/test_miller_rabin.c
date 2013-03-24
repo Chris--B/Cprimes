@@ -5,8 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void test_small_nums(CuTest* tc)
-{
+void test_small_nums(CuTest* tc) {
 	#define limit 10000
 
 	char buff[20]; //64-bit ints won't get larger than 18 digits
@@ -43,8 +42,7 @@ void test_small_nums(CuTest* tc)
 	free(mr_primes);
 }
 
-void test_big_primes(CuTest* tc)
-{
+void test_big_primes(CuTest* tc) {
 	//#http://primes.utm.edu/lists/small/
 	//300-digit primes
 	const char* primes []= {
@@ -62,8 +60,7 @@ void test_big_primes(CuTest* tc)
 	}
 }
 
-void test_big_nonprimes(CuTest* tc)
-{
+void test_big_nonprimes(CuTest* tc) {
 	const char* non_prime = 
 		"743808006803554439230129854961492699151386107534013432918073439524138264842370630061369715394739134090922937332590384720397133335969549256322620979036686633213903952966175107096769180017646161851573147596390153";
 
@@ -75,8 +72,7 @@ void test_big_nonprimes(CuTest* tc)
 	CuAssertf(tc, !miller_rabin(non_prime), "Miller Rabin returned true for large nonprime %s.", buff);
 }
 
-CuSuite* MillerRabinGetSuite()
-{
+CuSuite* MillerRabinGetSuite() {
 	CuSuite* suite = CuSuiteNew();
 	SUITE_ADD_TEST(suite, test_small_nums);
 	SUITE_ADD_TEST(suite, test_big_primes);

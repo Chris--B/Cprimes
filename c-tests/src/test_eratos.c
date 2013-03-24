@@ -4,8 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void test_0_is_empty(CuTest* tc)
-{
+void test_0_is_empty(CuTest* tc) {
 	uint64_t* primes = NULL;
 	size_t len = 0;
 	int res;
@@ -14,8 +13,7 @@ void test_0_is_empty(CuTest* tc)
 	CuAssertf(tc, len == 0, "\n\tLength was %.0f instead of 0.", (double) len);
 }
 
-void test_below_31_correct(CuTest* tc)
-{
+void test_below_31_correct(CuTest* tc) {
 	uint64_t knowns[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
 	uint64_t* primes = NULL;
 	
@@ -32,8 +30,7 @@ void test_below_31_correct(CuTest* tc)
 	}
 }
 
-void test_15mil_is_1mil_long(CuTest* tc)
-{
+void test_15mil_is_1mil_long(CuTest* tc) {
 	uint64_t* primes = NULL;
 	size_t len = 0;
 	int res;
@@ -43,8 +40,7 @@ void test_15mil_is_1mil_long(CuTest* tc)
 	CuAssertf(tc, len == 1000000, "\n\tLength was %.0f, but expected 1000000.", (double) len);
 }
 
-CuSuite* EratosGetSuite()
-{
+CuSuite* EratosGetSuite() {
 	CuSuite* suite = CuSuiteNew();
 	SUITE_ADD_TEST(suite, test_below_31_correct);
 	SUITE_ADD_TEST(suite, test_0_is_empty);

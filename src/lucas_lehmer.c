@@ -9,8 +9,7 @@
 /*
 	Determines if 2^prime_pow - 1 is prime
 */
-int lucas_lehmer(uint64_t prime_pow)
-{
+int lucas_lehmer(uint64_t prime_pow) {
 	mpz_t s_seq;
 	mpz_t tmp;
 	mpz_t M;

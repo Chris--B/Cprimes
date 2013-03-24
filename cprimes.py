@@ -16,9 +16,7 @@ _lucas_lehmer.restype = c_int
 _lucas_lehmer.argtypes = [c_uint64]
 
 def lucas_lehmer(power):
-	"""
-	Returns True when 2^power - 1 is prime, and False otherwise. If power is not prime, a ValueError is raised.
-	"""
+	"""Return True when 2^power - 1 is prime, and False otherwise. If power is not prime, raise a ValueError"""
 	if not is_prime(power):
 		raise ValueError("power must be prime.")
 	return bool(_lucas_lehmer(power))
@@ -29,12 +27,7 @@ _eratos.restype = c_int
 _eratos.argtypes = [c_uint64, POINTER(POINTER(c_uint64)), POINTER(c_size_t)]
 
 def below(num):
-	"""
-	Returns a list of all primes in the range [2, num). It is often faster to use is_prime when checking against a single instance of a number, rather than check for existance in this list. [Citation needed]
-
-	>>> pyprimes.below(30)
-	[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-	"""
+	"""Return a list of all primes in the range [2, num). Raise a TypeError if num is not an int."""
 	if not isinstance(num, int):
 		#Errors like proper grammar too.
 		text = num.__class__.__name__
@@ -43,7 +36,7 @@ def below(num):
 		else:
 			text = "a {}".format(text)
 
-		raise TypeError("Num must be an int, not {}".format(text))
+		raise TypeError("num must be an int, not {}".format(text))
 	elif num < 2:
 		return []
 
@@ -61,6 +54,11 @@ _miller_rabin.restype = c_int
 _miller_rabin.argtypes = [c_char_p]
 
 def is_prime(num):
+	"""
+	Check whether or not num is prime.
+		Raise a TypeError when num is not an int or string.
+		Raise a ValueError when if num is a string which cannot be converted to an int by the built-in "int"
+	"""
 	if isinstance(num, int):
 		num_arg = str(num).encode('utf-8')
 	elif isinstance(num, str):

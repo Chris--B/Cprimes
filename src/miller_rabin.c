@@ -17,8 +17,7 @@ const uint64_t primes [] = {
 	S isn't a big int because it doesn't need to be: To overflow s, you'd need a number more than 10^18 digits long.
 	No checks on D and S are made, so if you choose values which do not satisfy the above equation, good luck.
 */
-int _miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s)
-{
+int _miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s) {
 	mpz_t tmp;
 	mpz_t num_1;
 
@@ -35,8 +34,7 @@ int _miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s)
 			a ^ d mod num == 1
 	*/
 	mpz_powm(tmp, *a, *d, *num);
-	if(mpz_cmp_ui(tmp, 1) == 0)
-	{
+	if(mpz_cmp_ui(tmp, 1) == 0) {
 		maybe_prime = true;
 		goto end;
 	}
@@ -46,11 +44,9 @@ int _miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s)
 		there exist j in [0, s) s.t.:
 			a ^ (d * 2^j) mod num == num - 1
 	*/
-	for(j = 0; j < s; ++j)
-	{
+	for(j = 0; j < s; ++j) {
 		mpz_powm(tmp, *a, *d, *num);
-		if(mpz_cmp(tmp, num_1) == 0)
-		{
+		if(mpz_cmp(tmp, num_1) == 0) {
 			maybe_prime = true;
 			goto end;
 		}
@@ -66,8 +62,7 @@ end:
 /*
 	Returns nonzero when the number in num_str is probably prime.
 */
-CPRIMES_DEC int miller_rabin(const char* num_str)
-{
+CPRIMES_DEC int miller_rabin(const char* num_str) {
 	mpz_t num;
 	mpz_t d;
 	mpz_t a;
@@ -139,9 +134,10 @@ end:
 }
 
 //for benchmarking
-int gmp_miller_rabin(const char* num_str, int rounds)
-{
+int gmp_miller_rabin(const char* num_str, int rounds) {
 	mpz_t num;
+	int res;
 	mpz_init_set_str(num, num_str, 10);
-	return mpz_probab_prime_p(num, rounds);
+	res = mpz_probab_prime_p(num, rounds);
+	mpz_clear(num);
 }
