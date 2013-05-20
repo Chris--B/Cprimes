@@ -11,6 +11,7 @@ set(
 
 set(
 	includes
+	include/defines.h
 	include/eratos.h
 	include/estimate.h
 	include/lucas_lehmer.h
@@ -18,8 +19,11 @@ set(
 	include/seg_eratos.h
 )
 
-# MinGW
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMAKINGDLL")
+if("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
+	set(includes ${includes} include/windows-defines.h)
+else()
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMAKINGDLL")
+endif()
 
 add_library(
 	cprimes

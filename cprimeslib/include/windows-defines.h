@@ -6,18 +6,17 @@
 
 /* No/limited C99 */
 #define snprintf _snprintf
-#define PRIu64 "I64u"
 
+/* DLLs on Windows are odd. */
 #ifdef MAKINGDLL
-	#define Cprimes_Public EXTERN_C __declspec(dllexport)
+	#define Cprimes_Public EXTERN_C __declspec(dllimport)
 	#define Cprimes_Private static
 #else
-	#define Cprimes_Public EXTERN_C __declspec(dllimport)
+	#define Cprimes_Public EXTERN_C __declspec(dllexport)
 	#define Cprimes_Private static
 #endif
 
-/*
-	Some of Microsoft's errors are silly. This disables them.
-*/
+/*	Some of Microsoft's errors are silly. This disables them. */
+
 /* Warns about implicit conversions between integer and floating types */
 #pragma warning (disable: 4244)

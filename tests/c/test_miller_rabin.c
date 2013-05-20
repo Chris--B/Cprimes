@@ -34,7 +34,7 @@ void test_small_nums(CuTest* tc) {
 
 	for(i = 1; i < len; ++i) {
 		CuAssertf(tc, known[i] == mr_primes[i],
-			"Element %u from miller_rabin array should be %" PRIu64 " but was instead %" PRIu64,
+			"Element %u from miller_rabin array should be %" PRIu64 " but was instead %" PRIu64 ".",
 			i, known[i], mr_primes[i]);
 	}
 

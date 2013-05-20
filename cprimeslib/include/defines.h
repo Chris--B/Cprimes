@@ -19,7 +19,7 @@
 */
 #include <inttypes.h>
 
-#ifdef WIN32
+#ifdef _MSC_VER
 	#include <windows-defines.h>
 #else
 	#define Cprimes_Public EXTERN_C
