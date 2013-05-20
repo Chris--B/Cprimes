@@ -12,8 +12,7 @@ Everything can be called from straight C, although there isn't a unified, tidy h
 
 TODO
 ====
-(In order of priority)
-----------------------
+In order of priority
 
 1) General clean-up of the code. estimate{.c/.h} doesn't do anything and the code is in general, messy. It needs a thorough refactoring.
 
