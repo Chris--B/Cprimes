@@ -26,13 +26,13 @@ else()
 endif()
 
 add_library(
-	cprimes
+	${CPRIMESLIB}
 	SHARED
 	${sources}
 	${includes}
 )
 
 target_link_libraries(
-	cprimes
-	gmp
+	${CPRIMESLIB}
+	${BIGNUMLIB}
 	)

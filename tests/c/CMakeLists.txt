@@ -19,5 +19,5 @@ add_executable(
 	${sources}
 )
 
-target_link_libraries(tests-c cprimes)
+target_link_libraries(tests-c ${CPRIMESLIB})
 

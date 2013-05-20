@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 2.8)
 
 project(Cprimes)
 
+set(CPRIMESLIB "cprimes")
+set(BIGNUMLIB "gmp")
+
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
 	set(OPTIMIZE_FLAGS "-O2 -DNDEBUG")
 	set(WARNING_FLAGS "-Wall -Wextra")
