@@ -5,7 +5,7 @@ project(Cprimes)
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
 	set(OPTIMIZE_FLAGS "-O2 -DNDEBUG")
 	set(WARNING_FLAGS "-Wall -Wextra")
-	set(CMAKE_C_FLAGS "-std=c99 ${OPTIMIZE_FLAGS} ${WARNING_FLAGS}")
+	set(CMAKE_C_FLAGS "-ansi ${OPTIMIZE_FLAGS} ${WARNING_FLAGS}")
 endif()
 
 include_directories(cprimeslib/include)

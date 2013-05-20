@@ -4,7 +4,7 @@
 
 #include "CuTest.h"
 
-//I'm too lazy for one-line headerfiles.
+/* Oneline headers are a waste of time */
 CuSuite* EratosGetSuite();
 CuSuite* MillerRabinGetSuite();
 

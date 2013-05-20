@@ -25,8 +25,8 @@ int _miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s) {
 	int maybe_prime = 0;
 
 	mpz_init(tmp);
-	
-	mpz_init_set(num_1, *num); //num_1 == num - 1
+
+	mpz_init_set(num_1, *num); /* num_1 == num - 1 */
 	mpz_sub_ui(num_1, num_1, 1);
 
 	/*
@@ -63,14 +63,15 @@ end:
 	Returns nonzero when the number in num_str is probably prime.
 */
 CPRIMES_DEC int miller_rabin(const char* num_str) {
+	int maybe_prime;
+	size_t i;
+
+	uint64_t s;
+
 	mpz_t num;
 	mpz_t d;
 	mpz_t a;
 	mpz_t tmp;
-
-	uint64_t s;
-	int maybe_prime;
-	size_t i;
 
 	mpz_init_set_str(num, num_str, 10);
 
@@ -81,7 +82,7 @@ CPRIMES_DEC int miller_rabin(const char* num_str) {
 
 	mpz_init(tmp);
 
-	//Doesn't play nice for small numbers....
+	/* Doesn't play nice for small numbers.... */
 	if(mpz_cmp_ui(num, PRIMES_MAX + 1) < 0) {
 		for(i = 0; i < PRIMES_LEN; ++i) {
 			if(!mpz_cmp_ui(num, primes_cache[i])) {
@@ -93,7 +94,7 @@ CPRIMES_DEC int miller_rabin(const char* num_str) {
 		goto end;
 	} else {
 		for(i = 0; i < PRIMES_LEN; ++i) {
-			//Just your friendly neighborhood trivial division
+			/* Just your friendly neighborhood trivial division */
 			if(mpz_divisible_ui_p(num, primes_cache[i])) {
 				maybe_prime = 0;
 				goto end;
@@ -101,21 +102,21 @@ CPRIMES_DEC int miller_rabin(const char* num_str) {
 		}
 	}
 
-	if(mpz_even_p(num)) { //even?
+	if(mpz_even_p(num)) { /* even? */
 		if(!mpz_cmp_ui(num, 2)) {
-			maybe_prime = 1; //2 is prime
+			maybe_prime = 1; /* 2 is prime */
 		} else {
-			maybe_prime = 0; //no other evens are
+			maybe_prime = 0; /* no other evens are */
 		}
 		goto end;
 	}
 
-	//get D and S ready for _miller_round
+	/* get D and S ready for _miller_round */
 	for(s = 0; mpz_even_p(d); ++s) {
 		mpz_divexact_ui(d, d, 2);
 	}
 
-	//select witnesses from the list of primes
+	/* select witnesses from the list of primes */
 	for(i = 0; i < PRIMES_LEN; ++i) {
 		mpz_set_ui(a, primes_cache[i]);
 		mpz_set(tmp, d);
@@ -133,7 +134,7 @@ end:
 	return maybe_prime;
 }
 
-//for benchmarking
+/* for benchmarking */
 int gmp_miller_rabin(const char* num_str, int rounds) {
 	mpz_t num;
 	int res;

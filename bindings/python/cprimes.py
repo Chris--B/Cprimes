@@ -6,7 +6,7 @@ import sys
 
 #TODO: Unix friendly
 try:
-	cprimeslib = cdll.LoadLibrary("libcprimes.dll")
+	cprimeslib = cdll.LoadLibrary("cprimes.dll")
 except Exception as e:
 	print("Error finding cprimes:\n\t{}".format(e))
 	sys.exit(1)

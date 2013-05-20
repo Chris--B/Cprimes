@@ -57,13 +57,13 @@ int seg_eratos(uint64_t min, uint64_t max, size_t block, uint64_t **primes, size
 		while(known[i++] <= max) {
 			++*count;
 		}
-		
+
 		*primes = malloc( *count * sizeof(uint64_t));
 		if(!*primes) {
-			//something important
+			/* something important */
 			return errno = ENOMEM;
 		}
-		
+
 		memcpy(*primes, known, *count);
 		return errno = 0;
 	}

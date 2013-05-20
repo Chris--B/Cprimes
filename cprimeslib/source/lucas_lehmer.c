@@ -17,7 +17,7 @@ int lucas_lehmer(unsigned power) {
 	size_t i;
 	int res;
 
-	//The test doesn't handle 2.
+	/* The test doesn't handle 2. */
 	if(power == 2) {
 		return 1;
 	}
@@ -26,7 +26,7 @@ int lucas_lehmer(unsigned power) {
 	mpz_init_set_ui(tmp, 2);
 	mpz_init(M);
 
-	//error checking please...
+	/* error checking please... */
 
 	mpz_pow_ui(M, tmp, power);
 	mpz_sub_ui(M, M, 1);
