@@ -1,25 +1,23 @@
 Cprimes
 =======
 
-Library for all things prime-number related. Finding them, checking them, factoring numbers with them, the works.
+Toy project of mine for finding prime numbers.
 
 Usage
 =====
 
-All of the C-functions are declared in "primes.h", and linkable from the DLL. (I know DLLs are Windows-specific, I'm working on it.)
+Bindings exists for only Python at the moment, but there are plans for other languages like C#, Lua, Java, and Ruby. The final binaries or scripts for these bindings can be found in the /bin directory of the cmake build tree.
 
-Right now, it depends on a dynamically linked gmp DLL. I've been using libgmp-3.dll, because building it on Windows isn't pleasant. The exact name is defined in the root-level makefile. Not sure whether to use static or dynamic linking because of licensing issues - I'm aiming for MIT, but GMP is under LGPL. I don't yet understand licenses. 
+Everything can be called from straight C, although there isn't a unified, tidy header for that (yet).
 
 TODO
 ====
-(In no particular order)
+(In order of priority)
 
-1) Better build system. I don't like gmake. Whether this is a lack of knowledge on my part, or antiqued design on theirs I'm not sure. Probably the first. Either way, I'm impatient and don't want to deal with it. Thinking of writing a Python script to build everything for me.
+1) General clean-up of the code. estimate{.c/.h} doesn't do anything and the code is in general, messy. It needs a thorough refactoring.
 
-2) Segmented Eratosthenes Sieve. It's really limiting not being able to divide up the sieving - I can barely get past 10^9 for checking primes before my laptop runs out of contiguous RAM.
+2) Segmented Eratosthenes Sieve. It's really limiting not being able to divide up the sieving - 32-bit memory addressing shuts down sieving much past 1 billion. On 64-bit builds, sieving slows down to a crawl once swapping/paging starts
 
-3) Benchmarks. I wrote part of the Python wrappers in C because I though it'd be more efficient, but I don't have all that much evidence for the case. Setting up some tests were amazing in making sure everything works. Benchmarks are a must.
+3) Benchmarks. Along side the tests for correctness, there should be tests for speed to guage which options produce the best performance.
 
-4) Ruby, C#, and Java bindings. In that order, unless I get caught up in some new hype.
-
-5) Build 'primes.h'. A proper c-interface for the DLL would be nice, but I don't want it to depend on a bunch of little header files.
+4) Build 'primes.h'. It should be a single, self contained header file for interfacing the C-library, but using it instead of the collection in /cprimeslib/include would mean rebuilding everything everytime the header changes. Not OK.
