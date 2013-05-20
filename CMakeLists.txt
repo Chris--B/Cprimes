@@ -6,6 +6,8 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
 	set(OPTIMIZE_FLAGS "-O2 -DNDEBUG")
 	set(WARNING_FLAGS "-Wall -Wextra")
 	set(CMAKE_C_FLAGS "-ansi ${OPTIMIZE_FLAGS} ${WARNING_FLAGS}")
+elseif("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
+	set(CMAKE_C_FLAGS "/D_CRT_SECURE_NO_WARNINGS")
 endif()
 
 include_directories(cprimeslib/include)
