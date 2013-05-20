@@ -3,11 +3,11 @@
 #include <gmp.h>
 #include <string.h>
 
-const uint64_t primes [] = {
+const uint64_t primes_cache [] = {
 	2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257
 };
-#define PRIMES_LEN (sizeof(primes) / sizeof(primes[0]))
-#define PRIMES_MAX primes[PRIMES_LEN - 1]
+#define PRIMES_LEN (sizeof(primes_cache) / sizeof(primes_cache[0]))
+#define PRIMES_MAX primes_cache[PRIMES_LEN - 1]
 
 /*
 	Run a single round of the Miller-Rabin primality test.
@@ -22,7 +22,7 @@ int _miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s) {
 	mpz_t num_1;
 
 	unsigned j;
-	int maybe_prime = false;
+	int maybe_prime = 0;
 
 	mpz_init(tmp);
 	
@@ -35,7 +35,7 @@ int _miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s) {
 	*/
 	mpz_powm(tmp, *a, *d, *num);
 	if(mpz_cmp_ui(tmp, 1) == 0) {
-		maybe_prime = true;
+		maybe_prime = 1;
 		goto end;
 	}
 
@@ -47,7 +47,7 @@ int _miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s) {
 	for(j = 0; j < s; ++j) {
 		mpz_powm(tmp, *a, *d, *num);
 		if(mpz_cmp(tmp, num_1) == 0) {
-			maybe_prime = true;
+			maybe_prime = 1;
 			goto end;
 		}
 		mpz_mul_ui(*d, *d, 2);
@@ -84,18 +84,18 @@ CPRIMES_DEC int miller_rabin(const char* num_str) {
 	//Doesn't play nice for small numbers....
 	if(mpz_cmp_ui(num, PRIMES_MAX + 1) < 0) {
 		for(i = 0; i < PRIMES_LEN; ++i) {
-			if(!mpz_cmp_ui(num, primes[i])) {
-				maybe_prime = true;
+			if(!mpz_cmp_ui(num, primes_cache[i])) {
+				maybe_prime = 1;
 				goto end;
 			}
 		}
-		maybe_prime = false;
+		maybe_prime = 0;
 		goto end;
 	} else {
 		for(i = 0; i < PRIMES_LEN; ++i) {
 			//Just your friendly neighborhood trivial division
-			if(mpz_divisible_ui_p(num, primes[i])) {
-				maybe_prime = false;
+			if(mpz_divisible_ui_p(num, primes_cache[i])) {
+				maybe_prime = 0;
 				goto end;
 			}
 		}
@@ -103,9 +103,9 @@ CPRIMES_DEC int miller_rabin(const char* num_str) {
 
 	if(mpz_even_p(num)) { //even?
 		if(!mpz_cmp_ui(num, 2)) {
-			maybe_prime = true; //2 is prime
+			maybe_prime = 1; //2 is prime
 		} else {
-			maybe_prime = false; //no other evens are
+			maybe_prime = 0; //no other evens are
 		}
 		goto end;
 	}
@@ -117,14 +117,14 @@ CPRIMES_DEC int miller_rabin(const char* num_str) {
 
 	//select witnesses from the list of primes
 	for(i = 0; i < PRIMES_LEN; ++i) {
-		mpz_set_ui(a, primes[i]);
+		mpz_set_ui(a, primes_cache[i]);
 		mpz_set(tmp, d);
 		if(!_miller_rabin_round(&num, &a, &tmp, s)) {
-			maybe_prime = false;
+			maybe_prime = 0;
 			goto end;
 		}
 	}
-	maybe_prime = true;
+	maybe_prime = 1;
 end:
 	mpz_clear(num);
 	mpz_clear(d);
@@ -140,4 +140,5 @@ int gmp_miller_rabin(const char* num_str, int rounds) {
 	mpz_init_set_str(num, num_str, 10);
 	res = mpz_probab_prime_p(num, rounds);
 	mpz_clear(num);
+	return res;
 }

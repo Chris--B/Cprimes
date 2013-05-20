@@ -15,7 +15,7 @@ void test_small_nums(CuTest* tc) {
 
 	size_t len;
 	size_t i, k;
-	
+
 	int res;
 
 	res = eratos(limit, &known, &len);
@@ -33,8 +33,8 @@ void test_small_nums(CuTest* tc) {
 	}
 
 	for(i = 1; i < len; ++i) {
-		CuAssertf(tc, known[i] == mr_primes[i], 
-			"Element %u from miller_rabin array should be %" PRIu64 " but was instead %"  PRIu64,
+		CuAssertf(tc, known[i] == mr_primes[i],
+			"Element %u from miller_rabin array should be %" PRIu64 " but was instead %" PRIu64,
 			i, known[i], mr_primes[i]);
 	}
 
@@ -54,14 +54,14 @@ void test_big_primes(CuTest* tc) {
 	int i;
 	char buff [20];
 	for(i = 0; i < len; ++i) {
-		snprintf(buff, 15, "%s", primes[i]);
+		snprintf(buff, 15, "%15s", primes[i]);
 		snprintf(buff, 20, "%s... ", buff);
 		CuAssertf(tc, miller_rabin(primes[i]), "Miller Rabin returned false for large prime %s.", buff);
 	}
 }
 
 void test_big_nonprimes(CuTest* tc) {
-	const char* non_prime = 
+	const char* non_prime =
 		"743808006803554439230129854961492699151386107534013432918073439524138264842370630061369715394739134090922937332590384720397133335969549256322620979036686633213903952966175107096769180017646161851573147596390153";
 
 	int i;
@@ -69,7 +69,7 @@ void test_big_nonprimes(CuTest* tc) {
 
 	snprintf(buff, 15, "%s", non_prime);
 	snprintf(buff, 20, "%s... ", buff);
-	CuAssertf(tc, !miller_rabin(non_prime), "Miller Rabin returned true for large nonprime %s.", buff);
+	CuAssertf(tc, !miller_rabin(non_prime), "Miller Rabin returned true for large composite %s.", buff);
 }
 
 CuSuite* MillerRabinGetSuite() {
