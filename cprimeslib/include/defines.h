@@ -28,3 +28,6 @@
 
 /* iffy on naming, so I won't change this yet */
 #define CPRIMES_DEC Cprimes_Public
+
+#include <assert.h>
+/* TODO: static_assert */

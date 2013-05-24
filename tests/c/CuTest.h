@@ -79,7 +79,7 @@ char* CuBuffPrintf(const char* msg, ...);
 #define CuAssert(tc, ms, cond)                CuAssert_Line((tc), __FILE__, __LINE__, (ms), (cond))
 #define CuAssertTrue(tc, cond)                CuAssert_Line((tc), __FILE__, __LINE__, "assert failed", (cond))
 
-#define CuAssertf(tc, cond, msg, ...)         CuAssert(tc, CuBuffPrintf(msg, __VA_ARGS__), cond)
+#define CuAssertf(tc, cond, msg, ...)         CuAssert(tc, CuBuffPrintf(msg, __VA_ARGS__), (cond))
 
 #define CuAssertStrEquals(tc,ex,ac)           CuAssertStrEquals_LineMsg((tc),__FILE__,__LINE__,NULL,(ex),(ac))
 #define CuAssertStrEquals_Msg(tc,ms,ex,ac)    CuAssertStrEquals_LineMsg((tc),__FILE__,__LINE__,(ms),(ex),(ac))

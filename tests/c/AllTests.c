@@ -7,6 +7,7 @@
 /* Oneline headers are a waste of time */
 CuSuite* EratosGetSuite();
 CuSuite* MillerRabinGetSuite();
+CuSuite* EstimateGetSuite();
 
 void RunAllTests(void) {
     CuString *output = CuStringNew();
@@ -14,6 +15,7 @@ void RunAllTests(void) {
 
     CuSuiteAddSuite(suite, EratosGetSuite());
     CuSuiteAddSuite(suite, MillerRabinGetSuite());
+    CuSuiteAddSuite(suite, EstimateGetSuite());
 
    	CuSuiteRun(suite);
     CuSuiteSummary(suite, output);

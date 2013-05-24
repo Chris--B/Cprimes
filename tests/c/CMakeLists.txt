@@ -6,6 +6,7 @@ set(
 	CuTest.c
 	test_eratos.c
 	test_miller_rabin.c
+	test_estimate.c
 )
 
 set(

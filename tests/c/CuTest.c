@@ -149,7 +149,7 @@ static void CuFailInternal(CuTest* tc, const char* file, int line, CuString* str
 {
 	char buf[HUGE_STRING_LEN];
 
-	sprintf(buf, "%s:%d: ", file, line);
+	sprintf(buf, "%s:%d:\n\t", file, line);
 	CuStringInsert(string, buf, 0);
 
 	tc->failed = 1;
@@ -293,11 +293,23 @@ void CuSuiteRun(CuSuite* testSuite)
 
 void CuSuiteSummary(CuSuite* testSuite, CuString* summary)
 {
+	/*
+		Dots used to separate test names with status. I want F or P at
+		column 60, so there are 59 dots here.
+	*/
+	static const char spacer []= "...........................................................";
 	int i;
 	for (i = 0 ; i < testSuite->count ; ++i)
 	{
 		CuTest* testCase = testSuite->list[i];
-		CuStringAppend(summary, testCase->failed ? "F" : ".");
+		CuStringAppend(summary, testCase->name);
+
+		/* Bad things happen with really long names */
+		if(strlen(testCase->name) < sizeof(spacer) * sizeof(char)) {
+			CuStringAppend(summary, spacer + strlen(testCase->name));
+		}
+
+		CuStringAppend(summary, testCase->failed ? "F\n" : "P\n");
 	}
 	CuStringAppend(summary, "\n\n");
 }
@@ -326,7 +338,7 @@ void CuSuiteDetails(CuSuite* testSuite, CuString* details)
 			if (testCase->failed)
 			{
 				failCount++;
-				CuStringAppendFormat(details, "%d) %s: %s\n",
+				CuStringAppendFormat(details, "%d) %s\n  in %s\n",
 					failCount, testCase->name, testCase->message);
 			}
 		}
