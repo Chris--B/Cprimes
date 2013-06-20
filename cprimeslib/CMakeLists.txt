@@ -22,7 +22,7 @@ set(
 if("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
 	set(includes ${includes} include/windows-defines.h)
 else()
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMAKINGDLL")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 endif()
 
 add_library(
@@ -35,4 +35,5 @@ add_library(
 target_link_libraries(
 	${CPRIMESLIB}
 	${BIGNUMLIB}
+	m
 	)

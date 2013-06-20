@@ -1,0 +1,7 @@
+#/usr/bin/bash
+
+echo "Running C tests..."
+./tests-c
+
+echo "Running Python tests..."
+python3 tests-python.py

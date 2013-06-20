@@ -28,7 +28,7 @@ CPRIMES_DEC size_t high_estimate(uint64_t num) {
 }
 
 CPRIMES_DEC size_t good_estimate(uint64_t num) {
-	/* Not sure what to use here, so this is just filler */
+	/* Not sure what to use here, so in the meantime.... */
 	return high_estimate(num);
 }
 

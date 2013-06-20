@@ -1,15 +1,50 @@
 from ctypes import *
+
 import math
 import os
 import string
 import sys
 
-#TODO: Unix friendly
-try:
-	cprimeslib = cdll.LoadLibrary("cprimes.dll")
-except Exception as e:
-	print("Error finding cprimes:\n\t{}".format(e))
-	sys.exit(1)
+from ctypes.util import find_library
+
+def addAnOrA(text):
+	""" Add 'an' or 'a' to some text, depending on whether it starts with a vowel. """
+	if(text[0].lower() in "aeiou"):
+		return "an {}".format(text)
+	return "a {}".format(text)
+
+def load_cprimeslib():
+	lib_path = find_library("cprimes") or find_library("libcprimes")
+
+	# It's not where it should be. Maybe it's in the working directory?
+	# Let's just try a bunch of names and hope for the best.
+	if lib_path is None:
+		names = [
+			"./libcprimes.so", # Linux
+			"./libcprimes.dylib", # OS X
+			"./libcprimes.dll", "./cprimes.dll" # MinGW and MSVC windows, respectively
+			]
+		for name in names:
+			# CDLL raises an exception when it cannot find the file
+			# 	If it fails, move on to the next maybe name.
+			# 	If not, we're done!
+			try:
+				lib = CDLL(name)
+				break
+			except:
+				pass
+	# Python found a file with the right name, but things could still go wrong.
+	else:
+		try:
+			lib = CDLL(lib_path)
+		except OSError as e:
+			print("Error finding cprimes:\n\t{}".format(e))
+			sys.exit(1)
+
+	assert(lib is not None)
+	return lib
+
+cprimeslib = load_cprimeslib()
 
 _lucas_lehmer = cprimeslib.lucas_lehmer
 _lucas_lehmer.restype = c_int
@@ -21,7 +56,6 @@ def lucas_lehmer(power):
 		raise ValueError("power must be prime.")
 	return bool(_lucas_lehmer(power))
 
-
 _eratos = cprimeslib.eratos
 _eratos.restype = c_int
 _eratos.argtypes = [c_uint64, POINTER(POINTER(c_uint64)), POINTER(c_size_t)]
@@ -29,14 +63,7 @@ _eratos.argtypes = [c_uint64, POINTER(POINTER(c_uint64)), POINTER(c_size_t)]
 def below(num):
 	"""Return a list of all primes in the range [2, num). Raise a TypeError if num is not an int."""
 	if not isinstance(num, int):
-		#Errors like proper grammar too.
-		text = num.__class__.__name__
-		if(text[0].lower() in "aeiouh"):
-			text = "an {}".format(text)
-		else:
-			text = "a {}".format(text)
-
-		raise TypeError("num must be an int, not {}".format(text))
+		raise TypeError("num must be an int, not {}".format(addAnOrA(num.__class__.__name__)))
 	elif num < 2:
 		return []
 
@@ -62,19 +89,39 @@ def is_prime(num):
 	if isinstance(num, int):
 		num_arg = str(num).encode('utf-8')
 	elif isinstance(num, str):
-		try:
-			int(num)
-		except ValueError as e:
-			raise e
+		int(num)
 		num_arg = num.encode('utf-8')
 	else:
-		text = num.__class__.__name__
-		if(text[0].lower() in "aeiouh"):
-			text = "an {}".format(text)
-		else:
-			text = "a {}".format(text)
-		raise TypeError("Num must be an int or str, not {}".format(text))
+		raise TypeError("num must be an int or str, not {}".format(addAnOrA(num.__class__.__name__)))
 
 	return bool(_miller_rabin(num_arg))
 
-__all__ = ["is_prime", "below", "lucas_lehmer"]
+_low_estimate = cprimeslib.low_estimate
+_low_estimate.restype = c_size_t
+_low_estimate.argtypes = [c_uint64]
+
+def low_estimate(num):
+	if not isinstance(num, int):
+		raise TypeError("num must be an integer, not {}".format(addAnOrA(num.__class__.__name__)))
+	return _low_estimate(num)
+
+_high_estimate = cprimeslib.high_estimate
+_high_estimate.restype = c_size_t
+_high_estimate.argtypes = [c_uint64]
+
+def high_estimate(num):
+	if not isinstance(num, int):
+		raise TypeError("num must be an integer, not {}".format(addAnOrA(num.__class__.__name__)))
+	return _high_estimate(num)
+
+_good_estimate = cprimeslib.good_estimate
+_good_estimate.restype = c_size_t
+_good_estimate.argtypes = [c_uint64]
+
+def good_estimate(num):
+	if not isinstance(num, int):
+		raise TypeError("num must be an integer, not {}".format(addAnOrA(num.__class__.__name__)))
+	return _good_estimate(num)
+
+
+__all__ = ["is_prime", "below", "lucas_lehmer", "low_estimate", "high_estimate", "good_estimate"]
