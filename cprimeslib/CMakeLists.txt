@@ -34,6 +34,6 @@ add_library(
 
 target_link_libraries(
 	${CPRIMESLIB}
-	${BIGNUMLIB}
-	m
+	${GMPLIB}
+	m # Math library
 	)

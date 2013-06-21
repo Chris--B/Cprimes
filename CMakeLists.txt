@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 project(Cprimes)
 
 set(CPRIMESLIB "cprimes")
-find_library(BIGNUMLIB gmp)
+find_library(GMPLIB gmp)
 
 if(MSVC)
 	add_definitions("-D_CRT_SECURE_NO_WARNINGS")
