@@ -53,7 +53,7 @@ _lucas_lehmer.argtypes = [c_uint64]
 def lucas_lehmer(power):
 	"""Return True when 2^power - 1 is prime, and False otherwise. If power is not prime, raise a ValueError"""
 	if not is_prime(power):
-		raise ValueError("power must be prime.")
+		raise ValueError("power must be prime, but {} is composite!".format(power))
 	return bool(_lucas_lehmer(power))
 
 _eratos = cprimeslib.eratos
