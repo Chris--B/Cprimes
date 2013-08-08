@@ -45,7 +45,7 @@ define_estimate_test(600)
 define_estimate_test(601)
 define_estimate_test(355990)
 define_estimate_test(355991)
-define_estimate_test(255992)
+define_estimate_test(355992)
 
 define_eratos_in_estimate_bounds_test(598)
 define_eratos_in_estimate_bounds_test(599)
@@ -53,7 +53,7 @@ define_eratos_in_estimate_bounds_test(600)
 define_eratos_in_estimate_bounds_test(601)
 define_eratos_in_estimate_bounds_test(355990)
 define_eratos_in_estimate_bounds_test(355991)
-define_eratos_in_estimate_bounds_test(255992)
+define_eratos_in_estimate_bounds_test(355992)
 
 CuSuite* EstimateGetSuite() {
 	CuSuite* suite = CuSuiteNew();
@@ -64,7 +64,7 @@ CuSuite* EstimateGetSuite() {
 	SUITE_ADD_TEST(suite, estimate_601);
 	SUITE_ADD_TEST(suite, estimate_355990);
 	SUITE_ADD_TEST(suite, estimate_355991);
-	SUITE_ADD_TEST(suite, estimate_255992);
+	SUITE_ADD_TEST(suite, estimate_355992);
 
 	SUITE_ADD_TEST(suite, eratos_in_estimate_bounds_598);
 	SUITE_ADD_TEST(suite, eratos_in_estimate_bounds_599);
@@ -72,7 +72,7 @@ CuSuite* EstimateGetSuite() {
 	SUITE_ADD_TEST(suite, eratos_in_estimate_bounds_601);
 	SUITE_ADD_TEST(suite, eratos_in_estimate_bounds_355990);
 	SUITE_ADD_TEST(suite, eratos_in_estimate_bounds_355991);
-	SUITE_ADD_TEST(suite, eratos_in_estimate_bounds_255992);
+	SUITE_ADD_TEST(suite, eratos_in_estimate_bounds_355992);
 
 	return suite;
 }

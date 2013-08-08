@@ -72,9 +72,49 @@ class Lucas_Lehmer(unittest.TestCase):
 		for p in powers:
 			self.assertFalse(cp.lucas_lehmer(p), "failed with power={}".format(p))
 	def test_nonprime_powers_raise_ValueError(self):
+		# These are all composite
 		powers = [4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22, 24, 25, 26, 27, 28, 30]
 		for p in powers:
 			with self.assertRaises(ValueError):
 				cp.lucas_lehmer(p)
+
+class Estimates(unittest.TestCase):
+	def setUp(self):
+		self.nums = [598, 599, 600, 601, 355990, 355991, 355992]
+	
+	def _test_low_lower_than_good_num(self, num):
+		self.assertTrue(cp.low_estimate(num) <= cp.good_estimate(num), "low_estimate() > good_estimate() for {}".format(num))
+	def test_low_lower_than_good_598(self):
+		self._test_low_lower_than_good_num(598)
+	def test_low_lower_than_good_599(self):
+		self._test_low_lower_than_good_num(599)
+	def test_low_lower_than_good_600(self):
+		self._test_low_lower_than_good_num(600)
+	def test_low_lower_than_good_601(self):
+		self._test_low_lower_than_good_num(601)
+	def test_low_lower_than_good_355990(self):
+		self._test_low_lower_than_good_num(355990)
+	def test_low_lower_than_good_355991(self):
+		self._test_low_lower_than_good_num(355991)
+	def test_low_lower_than_good_355992(self):
+		self._test_low_lower_than_good_num(355992)
+	
+	def _test_high_higher_than_good_num(self, num):
+		self.assertTrue(cp.high_estimate(num) >= cp.good_estimate(num), "high_estimate() < good_estimate() for {}".format(num))
+	def test_high_higher_than_good_598(self):
+		self._test_high_higher_than_good_num(598)
+	def test_high_higher_than_good_599(self):
+		self._test_high_higher_than_good_num(599)
+	def test_high_higher_than_good_600(self):
+		self._test_high_higher_than_good_num(600)
+	def test_high_higher_than_good_601(self):
+		self._test_high_higher_than_good_num(601)
+	def test_high_higher_than_good_355990(self):
+		self._test_high_higher_than_good_num(355990)
+	def test_high_higher_than_good_355991(self):
+		self._test_high_higher_than_good_num(355990)
+	def test_high_higher_than_good_355992(self):
+		self._test_high_higher_than_good_num(355990)
+
 if __name__ == "__main__":
 	unittest.main(verbosity = 2)
