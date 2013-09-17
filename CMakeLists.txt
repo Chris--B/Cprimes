@@ -8,7 +8,7 @@ find_library(GMPLIB gmp)
 if(MSVC)
 	add_definitions("-D_CRT_SECURE_NO_WARNINGS")
 else()
-	set(CMAKE_C_FLAGS "-Wall -Wextra")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
 endif()
 
 include_directories(cprimeslib/include)
