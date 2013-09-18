@@ -6,16 +6,19 @@
 
 /* Oneline headers are a waste of time */
 CuSuite* EratosGetSuite();
-CuSuite* MillerRabinGetSuite();
 CuSuite* EstimateGetSuite();
+CuSuite* LucasLehmerGetSuite();
+CuSuite* MillerRabinGetSuite();
+
 
 void RunAllTests(void) {
     CuString *output = CuStringNew();
     CuSuite* suite = CuSuiteNew();
 
     CuSuiteAddSuite(suite, EratosGetSuite());
-    CuSuiteAddSuite(suite, MillerRabinGetSuite());
     CuSuiteAddSuite(suite, EstimateGetSuite());
+    CuSuiteAddSuite(suite, LucasLehmerGetSuite());
+    CuSuiteAddSuite(suite, MillerRabinGetSuite());
 
    	CuSuiteRun(suite);
     CuSuiteSummary(suite, output);

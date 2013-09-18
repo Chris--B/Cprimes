@@ -16,6 +16,11 @@ int lucas_lehmer(unsigned power) {
 	size_t i;
 	int res;
 
+	/* The test doesn't work for power == 2. 2 is always messing stuff up. */
+	if (power == 2) {
+		return 1;
+	}
+
 	mpz_init_set_ui(s_seq, 4);
 	mpz_init_set_ui(tmp, 2);
 	mpz_init(M);

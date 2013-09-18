@@ -22,6 +22,7 @@ set(sources
 	c/test_eratos.c
 	c/test_miller_rabin.c
 	c/test_estimate.c
+	c/test_lucas_lehmer.c
 )
 
 set(includes
