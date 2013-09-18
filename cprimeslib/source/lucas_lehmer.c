@@ -5,9 +5,8 @@
 
 #include <gmp.h>
 
-
 /*
-	Determines if 2^power - 1 is prime
+	Determine if M = 2 ** power - 1 is prime, assuming power is prime.
 */
 int lucas_lehmer(unsigned power) {
 	mpz_t s_seq;
@@ -17,21 +16,18 @@ int lucas_lehmer(unsigned power) {
 	size_t i;
 	int res;
 
-	/* The test doesn't handle 2. */
-	if(power == 2) {
-		return 1;
-	}
-
 	mpz_init_set_ui(s_seq, 4);
 	mpz_init_set_ui(tmp, 2);
 	mpz_init(M);
 
 	/* error checking please... */
 
+	/* M = 2 ** power - 1 */
 	mpz_pow_ui(M, tmp, power);
 	mpz_sub_ui(M, M, 1);
 
 	for(i = 0; i < power - 2; ++i) {
+		/* s_i = s_i-1 ** 2 - 2 */
 		mpz_powm_ui(tmp, s_seq, 2, M);
 		mpz_sub_ui(tmp, tmp, 2);
 
