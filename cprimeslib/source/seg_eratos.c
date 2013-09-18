@@ -41,7 +41,7 @@ void update_offsets(const uint64_t *primes, uint64_t len, size_t block_size, uin
 
 	Return errno - nonzero if something went wrong, zero if everything's cool.
 */
-int seg_eratos(uint64_t min, uint64_t max, size_t block, uint64_t **primes, size_t *count) {
+CPRIMES_DEC int seg_eratos(uint64_t min, uint64_t max, size_t block, uint64_t **primes, size_t *count) {
 	size_t i;
 
 	if(min >= max) {

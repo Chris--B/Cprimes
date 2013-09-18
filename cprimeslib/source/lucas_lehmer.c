@@ -8,7 +8,7 @@
 /*
 	Determine if M = 2 ** power - 1 is prime, assuming power is prime.
 */
-int lucas_lehmer(unsigned power) {
+CPRIMES_DEC int lucas_lehmer(unsigned power) {
 	mpz_t s_seq;
 	mpz_t tmp;
 	mpz_t M;
