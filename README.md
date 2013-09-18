@@ -24,7 +24,7 @@ In order of priority
 
 5) Build/export a 'primes.h'. It should be a single, self contained header file for interfacing the C-library. Using it instead of the collection in /cprimeslib/include would mean rebuilding everything every time the header changes, so it must be constructed from or include the other headers.
 
-6) More bindings. In no particular order: C#, Lua, Java, and Ruby.
+6) More bindings. In no particular order: C#, Lua, Java, Ruby, and Rust.
 
 Building
 ========
