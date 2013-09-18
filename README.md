@@ -1,7 +1,7 @@
 Cprimes
 =======
 
-Project for finding and verifying primes. Core functionality is written in ANSI C, with Python bindings for ease of use. Makes use of Miller-Rabin, Lucas-Lehmer, the Prime Number Theorem, and Sieve of Eratosthenes.
+Project for finding and verifying primes. Core functionality is written in ANSI C, with Python bindings for ease of use. Makes use of the Miller-Rabin and Lucas-Lehmer algorithms, the Prime Number Theorem, and Sieve of Eratosthenes.
 
 Usage
 =====
