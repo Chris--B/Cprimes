@@ -16,7 +16,7 @@ CPRIMES_DEC int lucas_lehmer(unsigned power) {
 	size_t i;
 	int res;
 
-	/* The test doesn't work for power == 2. 2 is always messing stuff up. */
+	/* The test doesn't work for power == 2. 2, the only even prime, is always messing stuff up. */
 	if (power == 2) {
 		return 1;
 	}
