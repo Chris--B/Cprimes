@@ -6,7 +6,6 @@ set(
 	source/estimate.c
 	source/lucas_lehmer.c
 	source/miller_rabin.c
-	source/seg_eratos.c
 )
 
 set(
@@ -16,7 +15,6 @@ set(
 	include/estimate.h
 	include/lucas_lehmer.h
 	include/miller_rabin.h
-	include/seg_eratos.h
 )
 
 if("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
