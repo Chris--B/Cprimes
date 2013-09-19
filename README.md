@@ -33,7 +33,7 @@ You'll need
 
 * a C compiler
 * [CMake](http://cmake.org) and your preferred build system. I'm found of [Ninja](http://martine.github.io/ninja/).
-* [GMP](http://gmplib.org), [MPIR](http://mpir.org), or anything mimicking the interface.
+* [GMP](http://gmplib.org), [MPIR](http://mpir.org) on Windows, or anything mimicking the interface.
 
 Example:
 
