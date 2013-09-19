@@ -17,7 +17,7 @@ const uint64_t primes_cache [] = {
 	S isn't a big int because it doesn't need to be: To overflow s, you'd need a number more than 10^18 digits long.
 	No checks on D and S are made, so if you choose values which do not satisfy the above equation, good luck.
 */
-int _miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s) {
+int miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s) {
 	mpz_t tmp;
 	mpz_t num_1;
 
@@ -102,7 +102,7 @@ CPRIMES_DEC int miller_rabin(const char* num_str) {
 		}
 	}
 
-	if(mpz_even_p(num)) { /* even? */
+	if(mpz_even_p(num)) {
 		if(!mpz_cmp_ui(num, 2)) {
 			maybe_prime = 1; /* 2 is prime */
 		} else {
@@ -120,7 +120,7 @@ CPRIMES_DEC int miller_rabin(const char* num_str) {
 	for(i = 0; i < PRIMES_LEN; ++i) {
 		mpz_set_ui(a, primes_cache[i]);
 		mpz_set(tmp, d);
-		if(!_miller_rabin_round(&num, &a, &tmp, s)) {
+		if(!miller_rabin_round(&num, &a, &tmp, s)) {
 			maybe_prime = 0;
 			goto end;
 		}
