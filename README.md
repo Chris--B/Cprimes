@@ -18,11 +18,11 @@ In order of priority
 
 2) Benchmarks.
 
-3) Segmented Eratosthenes Sieve. It's really limiting not being able to divide up the sieving - 32-bit memory addressing shuts down sieving much past 1 billion. On 64-bit builds, sieving slows down to a crawl once swapping/paging starts. Compare performance with standard Eratosthenes Sieve.
+3) Integrate tests and benchmarks into the build system, so they can be run when everything builds.
 
-4) Integrate tests and benchmarks into the build system, so they can be run when everything builds.
+4) Segmented Eratosthenes Sieve. It's really limiting not being able to divide up the sieving - 32-bit memory addressing shuts down sieving much past 1 billion. On 64-bit builds, sieving slows down to a crawl once swapping/paging starts. Then compare performance with standard Eratosthenes Sieve.
 
-5) Build/export a 'primes.h'. It should be a single, self contained header file for interfacing the C-library. Using it instead of the collection in /cprimeslib/include would mean rebuilding everything every time the header changes, so it must be constructed from or include the other headers.
+5) Build/export a 'primes.h'. It should be a single, self contained header file for interfacing the C-library. Using it instead of the collection in /cprimeslib/include would mean rebuilding everything every time the header changes, so it must be constructed from or include the other headers. (Python.h is a larger example of what I'm thinking of.)
 
 6) More bindings. In no particular order: C#, Lua, Java, Ruby, and Rust.
 
