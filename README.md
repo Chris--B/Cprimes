@@ -32,14 +32,16 @@ Building
 You'll need 
 
 * a C compiler
-* [CMake](http://cmake.org) and your preferred build system. I'm found of [Ninja](http://martine.github.io/ninja/).
+* [CMake](http://cmake.org)
+* Your preferred build system (Visual Studio, Make, XCode, whichever)
 * [GMP](http://gmplib.org), [MPIR](http://mpir.org) on Windows, or anything mimicking the interface.
 
 Example:
 
-	$ mkdir _build
-	$ cd _build
-	$ cmake -G "Ninja" .. -DCMAKE_BUILD_TYPE=Release
-	$ ninja
+	$ git clone https://github.com/Chris--B/Cprimes.git
+	$ mkdir cprimes-build
+	$ cd cprimes-build
+	$ cmake -G "MinGW MakeFiles" ../Cprimes -DCMAKE_BUILD_TYPE=Release
+	$ make
 
-Everything should build and run fine on Linux, OS X, and Windows, on both x86 and x64.
+Everything should build and run fine on Linux, OS X, and Windows.
