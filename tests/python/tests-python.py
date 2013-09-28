@@ -1,3 +1,4 @@
+#!/usr/bin/python3 
 import cprimes as cp
 import itertools
 import sys
