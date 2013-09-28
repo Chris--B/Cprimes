@@ -15,6 +15,7 @@ def addAnOrA(text):
 
 def load_cprimeslib():
 	lib_path = find_library("cprimes") or find_library("libcprimes")
+	lib = None
 
 	# It's not where it should be. Maybe it's in the working directory?
 	# Let's just try a bunch of names and hope for the best.
@@ -33,6 +34,9 @@ def load_cprimeslib():
 				break
 			except:
 				pass
+			if lib is None:
+				print("Error finding cprimes library.\nThe system couldn't find it, and it's not in the working directory.")
+				sys.exit(1)
 	# Python found a file with the right name, but things could still go wrong.
 	else:
 		try:
