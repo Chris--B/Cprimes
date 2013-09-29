@@ -46,7 +46,6 @@ if(BUILD_BENCHMARKS)
 	add_subdirectory(benchmarks)
 endif()
 
-
 if(BUILD_DOCUMENTATION)
 	find_package(Doxygen)
 	if(NOT DOXYGEN_FOUND)
