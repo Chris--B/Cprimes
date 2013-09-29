@@ -20,8 +20,3 @@
 
 #Product of building
 primes.h
-
-#My cmake build directories
-msvc
-mingw
-sublime
