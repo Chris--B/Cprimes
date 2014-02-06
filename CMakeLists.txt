@@ -9,6 +9,7 @@ if(MSVC)
 	add_definitions("-D_CRT_SECURE_NO_WARNINGS")
 else()
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -ansi")
+	set(MATH_LIB m) # Windows doesn't need explicit linking to its math library.
 endif()
 
 include_directories(cprimeslib/include)
