@@ -12,31 +12,30 @@ CuSuite* MillerRabinGetSuite();
 
 
 void RunAllTests(void) {
-    CuString *output = CuStringNew();
-    CuSuite* suite = CuSuiteNew();
+    CuSuite* suites[] = {
+        EratosGetSuite(),
+        EstimateGetSuite(),
+        LucasLehmerGetSuite(),
+        MillerRabinGetSuite(),
+    };
 
-    CuSuite* eratosSuite = EratosGetSuite();
-    CuSuite* estimateSuite = EstimateGetSuite();
-    CuSuite* lucasLehmerSuite = LucasLehmerGetSuite();
-    CuSuite* millerRabinSuite = MillerRabinGetSuite();
+    size_t i;
+    for (i = 0; i < sizeof(suites)/sizeof(suites[0]); i += 1) {
+        if (suites[i] == NULL) {
+            fprintf(stderr, "Suite pointer was null. Skipping.\n");
+        }
+        CuSuiteRun(suites[i]);
 
-    CuSuiteAddSuite(suite, eratosSuite);
-    CuSuiteAddSuite(suite, estimateSuite);
-    CuSuiteAddSuite(suite, lucasLehmerSuite);
-    CuSuiteAddSuite(suite, millerRabinSuite);
+        CuString *output = CuStringNew();
 
-    CuSuiteDelete(eratosSuite);
-    CuSuiteDelete(estimateSuite);
-    CuSuiteDelete(lucasLehmerSuite);
-    CuSuiteDelete(millerRabinSuite);
+        CuSuiteSummary(suites[i], output);
+        CuSuiteDetails(suites[i], output);
+        printf("%s\n", output->buffer);
 
-   	CuSuiteRun(suite);
-    CuSuiteSummary(suite, output);
-    CuSuiteDetails(suite, output);
-    printf("%s\n", output->buffer);
-
-    CuStringDelete(output);
-    CuSuiteDelete(suite);
+        CuStringDelete(output);
+        CuSuiteDelete(suites[i]);
+        suites[i] = NULL;
+    }
 }
 
 int main(void) {
