@@ -49,9 +49,9 @@ CuString* CuStringNew(void)
 
 void CuStringDelete(CuString *str)
 {
-        if (!str) return;
-        free(str->buffer);
-        free(str);
+		if (!str) return;
+		free(str->buffer);
+		free(str);
 }
 
 void CuStringResize(CuString* str, int newSize)
@@ -128,9 +128,9 @@ CuTest* CuTestNew(const char* name, TestFunction function)
 
 void CuTestDelete(CuTest *t)
 {
-        if (!t) return;
-        free(t->name);
-        free(t);
+		if (!t) return;
+		free(t->name);
+		free(t);
 }
 
 void CuTestRun(CuTest* tc)
@@ -182,8 +182,8 @@ void CuAssertStrEquals_LineMsg(CuTest* tc, const char* file, int line, const cha
 {
 	CuString string;
 	if ((expected == NULL && actual == NULL) ||
-	    (expected != NULL && actual != NULL &&
-	     strcmp(expected, actual) == 0))
+		(expected != NULL && actual != NULL &&
+		 strcmp(expected, actual) == 0))
 	{
 		return;
 	}
@@ -239,7 +239,7 @@ void CuSuiteInit(CuSuite* testSuite)
 {
 	testSuite->count = 0;
 	testSuite->failCount = 0;
-        memset(testSuite->list, 0, sizeof(testSuite->list));
+		memset(testSuite->list, 0, sizeof(testSuite->list));
 }
 
 CuSuite* CuSuiteNew(void)
@@ -251,15 +251,15 @@ CuSuite* CuSuiteNew(void)
 
 void CuSuiteDelete(CuSuite *testSuite)
 {
-        unsigned int n;
-        for (n=0; n < MAX_TEST_CASES; n++)
-        {
-                if (testSuite->list[n])
-                {
-                        CuTestDelete(testSuite->list[n]);
-                }
-        }
-        free(testSuite);
+	unsigned int n;
+	for (n=0; n < MAX_TEST_CASES; n++)
+	{
+		if (testSuite->list[n])
+		{
+			CuTestDelete(testSuite->list[n]);
+		}
+	}
+	free(testSuite);
 
 }
 
@@ -307,10 +307,10 @@ void CuSuiteSummary(CuSuite* testSuite, CuString* summary)
 		CuStringAppend(summary, testCase->name);
 
 		/* Bad things happen with really long names */
-		if(strlen(testCase->name) < sizeof(spacer) * sizeof(char)) {
+		if (strlen(testCase->name) < sizeof(spacer) * sizeof(char))
+		{
 			CuStringAppend(summary, spacer + strlen(testCase->name));
 		}
-
 		CuStringAppend(summary, testCase->failed ? "F\n" : "P\n");
 	}
 	CuStringAppend(summary, "\n\n");

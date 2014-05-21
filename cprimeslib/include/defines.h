@@ -20,10 +20,18 @@
 #include <inttypes.h>
 
 #ifdef _MSC_VER
-	#include <windows-defines.h>
+	#include <defines-windows.h>
 #else
 	#define Cprimes_Public EXTERN_C
 	#define Cprimes_Private static
+	/*
+		We use this extensively for its buffer-protection,
+			but we run into problems using it on windows.
+
+		In windows-defines.h, we just use _snprintf. But off of Windows,
+			we need to include / declare this properly.
+	*/
+	int snprintf(char*, int, const char*, ...);
 #endif
 
 /* iffy on naming, so I won't change this yet */
@@ -31,3 +39,4 @@
 
 #include <assert.h>
 /* TODO: static_assert */
+

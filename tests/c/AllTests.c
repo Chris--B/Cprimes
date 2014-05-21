@@ -1,8 +1,9 @@
-/* This is auto-generated code. Edit at your own peril. */
+#include "defines.h"
+#include "CuTest.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "CuTest.h"
 
 /* Oneline headers are a waste of time */
 CuSuite* EratosGetSuite();
@@ -12,33 +13,33 @@ CuSuite* MillerRabinGetSuite();
 
 
 void RunAllTests(void) {
-    CuSuite* suites[] = {
-        EratosGetSuite(),
-        EstimateGetSuite(),
-        LucasLehmerGetSuite(),
-        MillerRabinGetSuite(),
-    };
+	CuSuite* suites[] = {
+		EratosGetSuite(),
+		EstimateGetSuite(),
+		LucasLehmerGetSuite(),
+		MillerRabinGetSuite(),
+	};
 
-    size_t i;
-    for (i = 0; i < sizeof(suites)/sizeof(suites[0]); i += 1) {
-        if (suites[i] == NULL) {
-            fprintf(stderr, "Suite pointer was null. Skipping.\n");
-        }
-        CuSuiteRun(suites[i]);
+	size_t i;
+	for (i = 0; i < ARRAY_SIZE(suites); i += 1) {
+		if (suites[i] == NULL) {
+			fprintf(stderr, "Suite pointer was null. Skipping.\n");
+		}
+		CuSuiteRun(suites[i]);
 
-        CuString *output = CuStringNew();
+		CuString *output = CuStringNew();
 
-        CuSuiteSummary(suites[i], output);
-        CuSuiteDetails(suites[i], output);
-        printf("%s\n", output->buffer);
+		CuSuiteSummary(suites[i], output);
+		CuSuiteDetails(suites[i], output);
+		printf("%s\n", output->buffer);
 
-        CuStringDelete(output);
-        CuSuiteDelete(suites[i]);
-        suites[i] = NULL;
-    }
+		CuStringDelete(output);
+		CuSuiteDelete(suites[i]);
+		suites[i] = NULL;
+	}
 }
 
 int main(void) {
-    RunAllTests();
-    return 0;
+	RunAllTests();
+	return 0;
 }

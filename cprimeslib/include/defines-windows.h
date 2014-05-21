@@ -4,7 +4,7 @@
 	Windows does a lot of things differently. This header exists to smooth those differences out.
 */
 
-/* No/limited C99 */
+/* snprintf() is really, really useful. */
 #define snprintf _snprintf
 
 /* DLLs on Windows are odd. */
@@ -15,8 +15,3 @@
 	#define Cprimes_Public EXTERN_C __declspec(dllexport)
 	#define Cprimes_Private static
 #endif
-
-/*	Some of Microsoft's errors are silly. This disables them. */
-
-/* Warns about implicit conversions between integer and floating types */
-#pragma warning (disable: 4244)

@@ -1,23 +1,32 @@
+#include "defines.h"
 #include "CuTest.h"
 #include "lucas_lehmer.h"
 
 #include <assert.h>
 
 int is_prime[] = {0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1};
-size_t is_prime_size = sizeof(is_prime)/sizeof(is_prime[0]);
 
 void lucas_lehmer_power_of_n(CuTest* tc, unsigned power) {
-	CuAssertf(tc, power/2 < is_prime_size, "%u is out of range of lookup table (%f)", power, (double)is_prime_size);
+	CuAssertf(tc, power/2 < ARRAY_SIZE(is_prime),
+		"%u is out of range of lookup table (%f)",
+		power,
+		(double)ARRAY_SIZE(is_prime));
 
 	if (is_prime[power / 2]) {
-		CuAssertf(tc, lucas_lehmer(power), "2 ** %u - 1 is prime, but lucas_lehmer() returned false.", power);
+		CuAssertf(tc, lucas_lehmer(power),
+			"2 ** %u - 1 is prime, but lucas_lehmer() returned false.",
+			power);
 	} else {
-		CuAssertf(tc, !lucas_lehmer(power), "2 ** %u - 1 is composite, but lucas_lehmer() returned true.", power);
+		CuAssertf(tc, !lucas_lehmer(power),
+			"2 ** %u - 1 is composite, but lucas_lehmer() returned true.",
+			power);
 	}
 }
 
-#define make_small_test(num) \
-	void lucas_lehmer_power_of_##num(CuTest* cu) { lucas_lehmer_power_of_n(cu, num); }
+#define make_small_test(num)                                              \
+	void lucas_lehmer_power_of_##num(CuTest* cu) {                        \
+		lucas_lehmer_power_of_n(cu, num);                                 \
+	}
 
 make_small_test(2)
 make_small_test(3)
@@ -56,6 +65,6 @@ CuSuite* LucasLehmerGetSuite() {
 	SUITE_ADD_TEST(suite, lucas_lehmer_power_of_27);
 	SUITE_ADD_TEST(suite, lucas_lehmer_power_of_29);
 	SUITE_ADD_TEST(suite, lucas_lehmer_power_of_31);
-	
+
 	return suite;
 }
