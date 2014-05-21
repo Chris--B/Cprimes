@@ -31,6 +31,7 @@
 \
 		err = eratos(num, &primes, &actual); \
 		CuAssertf(tc, err == 0, "eratos(%" PRIu64") failed: %s", (uint64_t)num, strerror(err)); \
+		free(primes); \
 \
 		low_res = low_estimate(num); \
 		high_res = high_estimate(num); \

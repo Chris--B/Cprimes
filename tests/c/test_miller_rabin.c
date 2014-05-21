@@ -37,8 +37,8 @@ void miller_rabin_small_nums(CuTest* tc) {
 			"Element %u from miller_rabin array should be %" PRIu64 " but was instead %" PRIu64 ".",
 			i, known[i], mr_primes[i]);
 	}
-
 	#undef limit
+	free(known);
 	free(mr_primes);
 }
 

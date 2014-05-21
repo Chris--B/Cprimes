@@ -10,6 +10,7 @@ void eratos_0_is_empty(CuTest* tc) {
 	res = eratos(0, &primes, &len);
 	CuAssert(tc, strerror(res), res == 0);
 	CuAssertf(tc, len == 0, "Length was %.0f instead of 0.", (double) len);
+	free(primes);
 }
 
 void eratos_below_31_correct(CuTest* tc) {
@@ -27,6 +28,7 @@ void eratos_below_31_correct(CuTest* tc) {
 		CuAssertf(tc, primes[i] == knowns[i],
 			"Prime at index %u was %.0f, but expected %.0f.", i, (double)primes[i], (double)knowns[i]);
 	}
+	free(primes);
 }
 
 void eratos_15mil_is_1mil_long(CuTest* tc) {
@@ -37,6 +39,7 @@ void eratos_15mil_is_1mil_long(CuTest* tc) {
 	res = eratos(15485864, &primes, &len);
 	CuAssert(tc, strerror(res), res == 0);
 	CuAssertf(tc, len == 1000000, "Length was %.0f, but expected 1000000.", (double) len);
+	free(primes);
 }
 
 CuSuite* EratosGetSuite() {

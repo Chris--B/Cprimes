@@ -276,7 +276,9 @@ void CuSuiteAddSuite(CuSuite* testSuite, CuSuite* testSuite2)
 	for (i = 0 ; i < testSuite2->count ; ++i)
 	{
 		CuTest* testCase = testSuite2->list[i];
-		CuSuiteAdd(testSuite, testCase);
+		CuTest* newTest = CU_ALLOC(CuTest);
+		CuTestInit(newTest, testCase->name, testCase->function);
+		CuSuiteAdd(testSuite, newTest);
 	}
 }
 

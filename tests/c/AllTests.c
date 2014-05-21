@@ -15,15 +15,26 @@ void RunAllTests(void) {
     CuString *output = CuStringNew();
     CuSuite* suite = CuSuiteNew();
 
-    CuSuiteAddSuite(suite, EratosGetSuite());
-    CuSuiteAddSuite(suite, EstimateGetSuite());
-    CuSuiteAddSuite(suite, LucasLehmerGetSuite());
-    CuSuiteAddSuite(suite, MillerRabinGetSuite());
+    CuSuite* eratosSuite = EratosGetSuite();
+    CuSuite* estimateSuite = EstimateGetSuite();
+    CuSuite* lucasLehmerSuite = LucasLehmerGetSuite();
+    CuSuite* millerRabinSuite = MillerRabinGetSuite();
+
+    CuSuiteAddSuite(suite, eratosSuite);
+    CuSuiteAddSuite(suite, estimateSuite);
+    CuSuiteAddSuite(suite, lucasLehmerSuite);
+    CuSuiteAddSuite(suite, millerRabinSuite);
+
+    CuSuiteDelete(eratosSuite);
+    CuSuiteDelete(estimateSuite);
+    CuSuiteDelete(lucasLehmerSuite);
+    CuSuiteDelete(millerRabinSuite);
 
    	CuSuiteRun(suite);
     CuSuiteSummary(suite, output);
     CuSuiteDetails(suite, output);
     printf("%s\n", output->buffer);
+
     CuStringDelete(output);
     CuSuiteDelete(suite);
 }
