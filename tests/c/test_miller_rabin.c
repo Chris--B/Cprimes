@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 
+/* I don't thinks actually exists in ANSI C, but it's too useful to give up. */
+int snprintf(char*, int, const char*, ...);
+
 void miller_rabin_small_nums(CuTest* tc) {
 	#define limit 10000
 
@@ -25,7 +28,7 @@ void miller_rabin_small_nums(CuTest* tc) {
 
 	k = 0;
 	for(i = 1; i < limit; i += 1) {
-		snprintf(buff, 20, "%u", i);
+		snprintf(buff, 20, "%u", (unsigned int)i);
 		if(miller_rabin(buff)) {
 			mr_primes[k] = i;
 			++k;
