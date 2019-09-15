@@ -6,42 +6,22 @@ Project for finding and verifying primes. Core functionality is written in ANSI 
 Usage
 =====
 
-Bindings exists for only Python at the moment, but there are plans for other languages. The final binaries or scripts for these bindings can be found in the /bin directory of the CMake build tree. x64 builds *will not work* with x86 builds of Python. Make sure everything matches!
-
-Everything can be called from straight C, although there isn't a unified, tidy header for that (yet).
-
-TODO
-====
-In order of priority
-
-1) General clean-up of the code.
-
-2) Benchmarks.
-
-3) Integrate tests and benchmarks into the build system, so they can be run when everything builds.
-
-4) Segmented Eratosthenes Sieve. It's really limiting not being able to divide up the sieving - 32-bit memory addressing shuts down sieving much past 1 billion. On 64-bit builds, sieving slows down to a crawl once swapping/paging starts. Then compare performance with standard Eratosthenes Sieve.
-
-5) Build/export a 'primes.h'. It should be a single, self contained header file for interfacing the C-library. Using it instead of the collection in /cprimeslib/include would mean rebuilding everything every time the header changes, so it must be constructed from or include the other headers. (Python.h is a larger example of what I'm thinking of.)
-
-6) More bindings. In no particular order: C#, Lua, Java, Ruby, and Rust.
+The core functions are all written in Ansi C and can be called from C or C++. A Python module is provided that reexports the functions from the C DLL. Each function has its own header.
 
 Building
 ========
 
-You'll need 
+This project should build out-of-the-box with CMake 3 and FetchContent (for Windows).
 
-* a C compiler
-* [CMake](http://cmake.org)
-* Your preferred build system (Visual Studio, Make, XCode, whichever)
-* [GMP](http://gmplib.org), [MPIR](http://mpir.org) on Windows, or anything mimicking the interface.
+```
+git clone git@github.com:Chris--B/Cprimes.git
+cd Cprimes
+mkdir _build && cd _build
+cmake -G Ninja .. 
+ninja
+```
 
-Example:
+This will produce a `cprimes.dll` or `libcprimes.so` file in `_build/bin` along with some test artifacts.
+GMP is expected to be installed on macOS or Linux systems so that CMake's `find_library()` can find it. On Windows, we host binaries on Github and include them using CMake.
 
-	$ git clone https://github.com/Chris--B/Cprimes.git
-	$ mkdir cprimes-build
-	$ cd cprimes-build
-	$ cmake -G "MinGW MakeFiles" ../Cprimes -DCMAKE_BUILD_TYPE=Release
-	$ make
-
-Everything should build and run fine on Linux, OS X, and Windows.
+Please open issues on Github if you encounter any problems.
