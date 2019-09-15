@@ -21,10 +21,10 @@ def load_cprimeslib():
 	# Let's just try a bunch of names and hope for the best.
 	if lib_path is None:
 		names = [
-			"./libcprimes.so", # Linux
-			"./libcprimes.dylib", # OS X
-			"./libcprimes.dll", "./cprimes.dll" # MinGW and MSVC windows, respectively
-			]
+			"./libcprimes.so",                  # Linux
+			"./libcprimes.dylib",               # OS X
+			"./libcprimes.dll", "./cprimes.dll" # Windows
+		]
 		for name in names:
 			# CDLL raises an exception when it cannot find the file
 			# 	If it fails, move on to the next maybe name.
@@ -33,7 +33,7 @@ def load_cprimeslib():
 				lib = CDLL(name)
 				break
 			except:
-				pass
+				continue
 			if lib is None:
 				print("Error finding cprimes library.\nThe system couldn't find it, and it's not in the working directory.")
 				sys.exit(1)

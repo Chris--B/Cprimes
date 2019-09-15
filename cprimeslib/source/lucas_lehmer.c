@@ -1,14 +1,19 @@
-#include "lucas_lehmer.h"
+#include <lucas_lehmer.h>
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "util.h"
 
 #include <gmp.h>
+
+#include <stdlib.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
 	Determine if M = 2 ** power - 1 is prime, assuming power is prime.
 */
-CPRIMES_DEC int lucas_lehmer(unsigned power) {
+CPRIMES_EXPORT int lucas_lehmer(unsigned power) {
 	mpz_t s_seq;
 	mpz_t tmp;
 	mpz_t M;
@@ -46,3 +51,7 @@ CPRIMES_DEC int lucas_lehmer(unsigned power) {
 
 	return res;
 }
+
+#ifdef __cplusplus
+}
+#endif

@@ -1,10 +1,16 @@
 #pragma once
 
-#include "defines.h"
+#include <cprimes_platform.h>
+
+#include <assert.h>
+#include <inttypes.h>
+#include <stdio.h>
 
 #include <stdlib.h>
 
-START_EXTERN_C
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
 	Functionally equivilent to true and false.
@@ -64,10 +70,9 @@ enum Primality { MaybePrime, NotPrime };
 	@todo - Reference proper acedemic papers, instead of a blog post for
 	describing Sieve of Eratosthenes
 	- Depreciate in favor of Segmented Sieve of Eratosthenes (Unfinished!)
-		.
-
 */
-CPRIMES_DEC int eratos(uint64_t num, uint64_t **primes_array, size_t *len);
+CPRIMES_EXPORT int eratos(uint64_t num, uint64_t **primes_array, size_t *len);
 
-END_EXTERN_C
-
+#ifdef __cplusplus
+}
+#endif

@@ -1,37 +1,48 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
+project(Cprimes LANGUAGES C)
 
-set(
-	sources
-	source/eratos.c
-	source/estimate.c
-	source/lucas_lehmer.c
-	source/miller_rabin.c
+add_library(cprimes SHARED)
+
+set_property(TARGET cprimes PROPERTY C_STANDARD 89)
+
+target_include_directories(cprimes
+	PUBLIC
+		include
 )
 
-set(
-	includes
-	include/defines.h
-	include/eratos.h
-	include/estimate.h
-	include/lucas_lehmer.h
-	include/miller_rabin.h
+target_sources(cprimes
+	PRIVATE
+		# Implementation files
+		source/eratos.c
+		source/estimate.c
+		source/lucas_lehmer.c
+		source/miller_rabin.c
+
+		# Public headers
+		include/eratos.h
+		include/estimate.h
+		include/lucas_lehmer.h
+		include/miller_rabin.h
+
+		# Private headers
+		source/util.h
 )
 
-if("${CMAKE_C_COMPILER_ID}" STREQUAL "MSVC")
-	set(includes ${includes} include/windows-defines.h)
-else()
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
-endif()
-
-add_library(
-	${CPRIMESLIB}
-	SHARED
-	${sources}
-	${includes}
+target_compile_definitions(cprimes
+	PRIVATE
+		CPRIMES_BUILDING_DLL=1
+	INTERFACE
+		CPRIMES_BUILDING_DLL=0
 )
 
-target_link_libraries(
-	${CPRIMESLIB}
-	${GMPLIB}
-	${MATH_LIB}
-	)
+set_target_properties(cprimes
+	PROPERTIES
+		ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+		LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+		RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+target_link_libraries(cprimes
+	PRIVATE
+		${GMPLIB}
+)

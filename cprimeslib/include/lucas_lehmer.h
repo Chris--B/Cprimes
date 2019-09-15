@@ -1,12 +1,14 @@
 #pragma once
 
-#include "defines.h"
+#include <cprimes_platform.h>
 
-#include <stdlib.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /** @brief Check if 2**@p power - 1 is a Mersenne Prime
 
-	Numbers in the form of 2**n - 1 for some integer @a n are called 
+	Numbers in the form of 2**n - 1 for some integer @a n are called
 	Mersenne numbers and are detonated as M(@a n). When these are prime,
 	they are called Mersenne primes.
 	This function uses the Lucas Lehmer method to check if M(@p power)
@@ -14,7 +16,7 @@
 
 	This method is a faster primality test than Miller Rabin, but it
 	only works on Mersenne numbers.
-	
+
 	@returns This function returns nonzero when 2**@p power - 1 is prime,
 	otherwise 0.
 
@@ -37,7 +39,7 @@
 		p == 3, M(p) == 7, Prime
 		p == 5, M(p) == 31, Prime
 		p == 7, M(p) == 127, Prime
-		p == 11, M(p) == 2047, 
+		p == 11, M(p) == 2047,
 		p == 13, M(p) == 8191, Prime
 		p == 17, M(p) == 131071, Prime
 	@endcode
@@ -46,4 +48,8 @@
 	meaningless. No check for primeness is performed.
 
 */
-CPRIMES_DEC int lucas_lehmer(unsigned power);
+CPRIMES_EXPORT int lucas_lehmer(unsigned power);
+
+#ifdef __cplusplus
+}
+#endif

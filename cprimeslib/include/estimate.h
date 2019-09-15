@@ -1,9 +1,13 @@
 #pragma once
 
-#include "defines.h"
-#include <stdlib.h>
+#include <cprimes_platform.h>
 
-START_EXTERN_C
+#include <inttypes.h>
+/* #include <stdlib.h> */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
 	Redesign this!
@@ -20,17 +24,19 @@ START_EXTERN_C
 
 /** @brief Lower bound on the number of primes <= @p num
 */
-CPRIMES_DEC size_t low_estimate(uint64_t num);
+CPRIMES_EXPORT size_t low_estimate(uint64_t num);
 
 /** @brief Upper bound on the number of primes <= @p num
 */
-CPRIMES_DEC size_t high_estimate(uint64_t num);
+CPRIMES_EXPORT size_t high_estimate(uint64_t num);
 
 /** @brief Better approximation for primes <= @p num.
 
 	This function produces a much better estimate, but it is not
 	consistently an over or lower estimate.
 */
-CPRIMES_DEC size_t good_estimate(uint64_t num);
+CPRIMES_EXPORT size_t good_estimate(uint64_t num);
 
-END_EXTERN_C
+#ifdef __cplusplus
+}
+#endif

@@ -1,8 +1,9 @@
-#include "defines.h"
+#include <lucas_lehmer.h>
 #include "CuTest.h"
-#include "lucas_lehmer.h"
 
 #include <assert.h>
+
+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
 
 int is_prime[] = {0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1};
 

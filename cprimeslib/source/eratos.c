@@ -1,10 +1,16 @@
-#include "eratos.h"
-#include "estimate.h"
+#include <eratos.h>
+#include <estimate.h>
+
+#include "util.h"
 
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
 	\brief Return the index of \p value in the internal sieve used by eratos()
@@ -23,7 +29,7 @@ static uint64_t odd_array_value_at(size_t index) {
 /*
 	The Sieve of Eratosthenes works by crossing off multiples of known primes to find more. It starts with an array initialized with \a MaybePrime starting with 3 (we skip evens because they're obvious) and ending with the sqrt(\a num). We go through the array and "cross off" every 3rd, and then 5th, etc. element by setting it to \a NotPrime. The next number to iterate by is the next number in the array still set to \a MaybePrime. By the time we've gotten to the end, the only elements left set as \a MaybePrime have no factors besides themselves, a.k.a. they're prime.
 */
-CPRIMES_DEC int eratos(uint64_t num, uint64_t** primes_array, size_t *len) {
+CPRIMES_EXPORT int eratos(uint64_t num, uint64_t** primes_array, size_t *len) {
 	/* If we're not given an array to store output, don't. */
 	int save_results = primes_array != NULL;
 
@@ -70,7 +76,7 @@ CPRIMES_DEC int eratos(uint64_t num, uint64_t** primes_array, size_t *len) {
 	}
 
 	if(save_results) {
-		/* 
+		/*
 			Over estimate how many primes there are, we can trim off extra memory later. Add one to the estimate for the trailing 0.
 		*/
 		results = malloc((1 + high_estimate(num)) * sizeof(uint64_t));
@@ -114,3 +120,7 @@ CPRIMES_DEC int eratos(uint64_t num, uint64_t** primes_array, size_t *len) {
 	}
 	return errno = 0;
 }
+
+#ifdef __cplusplus
+extern "C" {
+#endif

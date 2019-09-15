@@ -1,5 +1,5 @@
+#include <eratos.h>
 #include "CuTest.h"
-#include "eratos.h"
 
 #include <string.h>
 

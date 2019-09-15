@@ -1,9 +1,16 @@
 #pragma once
 
-#include "defines.h"
+#include <cprimes_platform.h>
 
-START_EXTERN_C
+#include <inttypes.h>
 
-CPRIMES_DEC int miller_rabin(const char* num_str);
 
-END_EXTERN_C
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+CPRIMES_EXPORT int miller_rabin(const char* num_str);
+
+#ifdef __cplusplus
+}
+#endif

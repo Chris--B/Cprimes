@@ -1,9 +1,9 @@
-#include "defines.h"
 #include "CuTest.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
 
+#include <stdio.h>
+// #include <stdlib.h>
 
 /* Oneline headers are a waste of time */
 CuSuite* EratosGetSuite();

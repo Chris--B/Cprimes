@@ -1,10 +1,11 @@
-#include "defines.h"
+#include <eratos.h>
+#include <miller_rabin.h>
 #include "CuTest.h"
-#include "eratos.h"
-#include "miller_rabin.h"
 
 #include <stdio.h>
 #include <string.h>
+
+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
 
 void miller_rabin_small_nums(CuTest* tc) {
 	#define limit 10000
@@ -45,7 +46,7 @@ void miller_rabin_small_nums(CuTest* tc) {
 }
 
 void miller_rabin_big_primes(CuTest* tc) {
-	/* #http://primes.utm.edu/lists/small/ */
+	/* http://primes.utm.edu/lists/small/ */
 	/* 300-digit primes */
 	const char* primes []= {
 		"2039568783564019774057658669290345772801939933143482630947726464532830"

@@ -1,9 +1,19 @@
-#include "miller_rabin.h"
+#include <miller_rabin.h>
+
+#include "util.h"
 
 #include <gmp.h>
+
+#include <assert.h>
+#include <inttypes.h>
+#include <stdio.h>
 #include <string.h>
 
-const uint64_t primes_cache [] = {
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+static const uint64_t primes_cache [] = {
 	2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257
 };
 #define PRIMES_LEN (sizeof(primes_cache) / sizeof(primes_cache[0]))
@@ -62,7 +72,7 @@ end:
 /*
 	Returns nonzero when the number in num_str is probably prime.
 */
-CPRIMES_DEC int miller_rabin(const char* num_str) {
+CPRIMES_EXPORT int miller_rabin(const char* num_str) {
 	int maybe_prime;
 	size_t i;
 
@@ -143,3 +153,7 @@ int gmp_miller_rabin(const char* num_str, int rounds) {
 	mpz_clear(num);
 	return res;
 }
+
+#ifdef __cplusplus
+}
+#endif

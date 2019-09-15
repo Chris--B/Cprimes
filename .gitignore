@@ -15,13 +15,11 @@
 # Binaries
 *.exe
 
-#Compiled Python files
+# Compiled Python files
 *.pyc
 
-#Product of building
+# Product of building
 primes.h
 
-#My cmake build directories
-msvc
-mingw
-sublime
+# My cmake build directories
+_*
