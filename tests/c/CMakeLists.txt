@@ -54,9 +54,3 @@ set_target_properties(tests-c
     PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:cprimes>
 )
-
-if(WIN32)
-    set(OS_TESTS_RUNNER run-all-tests.bat)
-else()
-    set(OS_TESTS_RUNNER run-all-tests)
-endif()

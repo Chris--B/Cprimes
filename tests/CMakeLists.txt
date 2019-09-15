@@ -5,6 +5,12 @@ add_subdirectory(c)
 
 # No CMakeLists files in `python
 
+if(WIN32)
+    set(OS_TESTS_RUNNER run-all-tests.bat)
+else()
+    set(OS_TESTS_RUNNER run-all-tests)
+endif()
+
 add_custom_target(copy_tests_files ALL
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${OS_TESTS_RUNNER}
     COMMENT "Copying Unit tests and tests runner scripts"
