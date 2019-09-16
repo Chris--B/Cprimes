@@ -20,8 +20,7 @@ void RunAllTests(void) {
 		MillerRabinGetSuite(),
 	};
 
-	size_t i;
-	for (i = 0; i < ARRAY_SIZE(suites); i += 1) {
+	for (size_t i = 0; i < ARRAY_SIZE(suites); i += 1) {
 		if (suites[i] == NULL) {
 			fprintf(stderr, "Suite pointer was null. Skipping.\n");
 		}

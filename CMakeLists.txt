@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.0)
 
 project(CprimesWorkspace LANGUAGES C)
 
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+	set(CMAKE_INSTALL_PREFIX install CACHE PATH "Install path" FORCE)
+endif()
+
 # Find a GMP install
 # Linux and macOS targets should be able to install this from their
 # package manager (apt, brew, etc), or just build from source.
@@ -39,3 +43,11 @@ if(BUILD_DOCUMENTATION)
 		SOURCES ${CMAKE_BINARY_DIR}/Doxyfile
 	)
 endif()
+
+install(TARGETS cprimes
+	DESTINATION bin
+)
+
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cprimeslib/include/cprimes.h
+	DESTINATION include
+)

@@ -1,4 +1,4 @@
-#include <lucas_lehmer.h>
+#include <cprimes.h>
 
 #include "util.h"
 

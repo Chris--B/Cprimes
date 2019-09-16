@@ -44,6 +44,19 @@ target_compile_definitions(tests-c
         _CRT_SECURE_NO_WARNINGS=1
 )
 
+if (MSVC)
+    target_compile_options(tests-c
+        PRIVATE
+            /W4 /WX
+            /wd4204 # nonstandard extension used: non-constant aggregate initializer
+    )
+else()
+    target_compile_options(tests-c
+        PRIVATE
+            -Wall -Wextra -Werror
+    )
+endif()
+
 target_link_libraries(tests-c
     PRIVATE
         cutest

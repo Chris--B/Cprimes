@@ -1,7 +1,6 @@
-#include <lucas_lehmer.h>
-#include "CuTest.h"
+#include <cprimes.h>
 
-#include <assert.h>
+#include "CuTest.h"
 
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
 

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(Cprimes LANGUAGES C)
 
-add_library(cprimes SHARED)
+add_library(cprimes)
 
 set_property(TARGET cprimes PROPERTY C_STANDARD 89)
 
@@ -18,22 +18,35 @@ target_sources(cprimes
 		source/lucas_lehmer.c
 		source/miller_rabin.c
 
-		# Public headers
-		include/eratos.h
-		include/estimate.h
-		include/lucas_lehmer.h
-		include/miller_rabin.h
+		# Public header
+		include/cprimes.h
 
 		# Private headers
 		source/util.h
 )
 
-target_compile_definitions(cprimes
-	PRIVATE
-		CPRIMES_BUILDING_DLL=1
-	INTERFACE
-		CPRIMES_BUILDING_DLL=0
-)
+if (MSVC)
+	target_compile_options(cprimes
+		PRIVATE
+			/W4 /WX
+	)
+else()
+	target_compile_options(cprimes
+		PRIVATE
+			-Wall -Wextra -Werror -pedantic
+	)
+endif()
+
+if (${BUILD_SHARED_LIBS})
+	target_compile_definitions(cprimes
+		PUBLIC
+			CPRIMES_USING_DLL=1
+		PRIVATE
+			CPRIMES_BUILDING_DLL=1
+		INTERFACE
+			CPRIMES_BUILDING_DLL=0
+	)
+endif()
 
 set_target_properties(cprimes
 	PROPERTIES

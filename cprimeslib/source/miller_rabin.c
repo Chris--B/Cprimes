@@ -1,13 +1,10 @@
-#include <miller_rabin.h>
+#include <cprimes.h>
 
 #include "util.h"
 
 #include <gmp.h>
 
-#include <assert.h>
-#include <inttypes.h>
-#include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -16,8 +13,9 @@ extern "C" {
 static const uint64_t primes_cache [] = {
 	2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257
 };
-#define PRIMES_LEN (sizeof(primes_cache) / sizeof(primes_cache[0]))
-#define PRIMES_MAX primes_cache[PRIMES_LEN - 1]
+
+#define PRIMES_CACHE_LEN (sizeof(primes_cache) / sizeof(primes_cache[0]))
+#define PRIMES_CACHE_MAX primes_cache[PRIMES_CACHE_LEN - 1]
 
 /*
 	Run a single round of the Miller-Rabin primality test.
@@ -27,7 +25,7 @@ static const uint64_t primes_cache [] = {
 	S isn't a big int because it doesn't need to be: To overflow s, you'd need a number more than 10^18 digits long.
 	No checks on D and S are made, so if you choose values which do not satisfy the above equation, good luck.
 */
-int miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s) {
+static int miller_rabin_round(mpz_t* num, mpz_t* a, mpz_t* d, uint64_t s) {
 	mpz_t tmp;
 	mpz_t num_1;
 
@@ -93,8 +91,8 @@ CPRIMES_EXPORT int miller_rabin(const char* num_str) {
 	mpz_init(tmp);
 
 	/* Doesn't play nice for small numbers.... */
-	if(mpz_cmp_ui(num, PRIMES_MAX + 1) < 0) {
-		for(i = 0; i < PRIMES_LEN; ++i) {
+	if(mpz_cmp_ui(num, PRIMES_CACHE_MAX + 1) < 0) {
+		for(i = 0; i < PRIMES_CACHE_LEN; ++i) {
 			if(!mpz_cmp_ui(num, primes_cache[i])) {
 				maybe_prime = 1;
 				goto end;
@@ -103,7 +101,7 @@ CPRIMES_EXPORT int miller_rabin(const char* num_str) {
 		maybe_prime = 0;
 		goto end;
 	} else {
-		for(i = 0; i < PRIMES_LEN; ++i) {
+		for(i = 0; i < PRIMES_CACHE_LEN; ++i) {
 			/* Just your friendly neighborhood trivial division */
 			if(mpz_divisible_ui_p(num, primes_cache[i])) {
 				maybe_prime = 0;
@@ -127,7 +125,7 @@ CPRIMES_EXPORT int miller_rabin(const char* num_str) {
 	}
 
 	/* select witnesses from the list of primes */
-	for(i = 0; i < PRIMES_LEN; ++i) {
+	for(i = 0; i < PRIMES_CACHE_LEN; ++i) {
 		mpz_set_ui(a, primes_cache[i]);
 		mpz_set(tmp, d);
 		if(!miller_rabin_round(&num, &a, &tmp, s)) {

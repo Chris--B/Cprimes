@@ -1,6 +1,8 @@
-#include <eratos.h>
+#include <cprimes.h>
+
 #include "CuTest.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 void eratos_0_is_empty(CuTest* tc) {

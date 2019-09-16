@@ -1,8 +1,9 @@
-#include <eratos.h>
-#include <estimate.h>
+#include <cprimes.h>
+
 #include "CuTest.h"
 
 #include <errno.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define define_estimate_test(num)                                         \
